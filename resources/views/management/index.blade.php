@@ -316,10 +316,10 @@
                                                 <td> <a href="{{ route('management.product.update' , $report->prod_id) }}"><img src="{{ $report->product_image!=null ? asset('uploads/products/' . $report->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}" alt="" class="wd-50"></a>
                                                 </td>
                                                 <td class="wd-100p"><a href="{{ route('management.product.update' , $report->prod_id) }}">{{ $report->product_name }}</a><br>
-                                                    <span class="tx-10 tx-gray-500">Kategori:
+                                                    <span class="tx-10 tx-gray-500 wa">Kategori:
                                                        @foreach($best_selling_products_category as $category)
                                                             @if($report->prod_id == $category->prod_id)
-                                                            <a href="" class="bold">{{ $category->category_name }}</a>,
+                                                            <a href="" class="bold">{{ $category->category_name }}</a>
                                                             @endif
                                                         @endforeach
                                                     </span>
@@ -595,16 +595,14 @@
             // Pie Chart
             /////////////////////////////////////////////
 
-
             var piedata = [
-
             @foreach($best_selling_categories as $category=>$number)
                 {
                     label: '{{ $category }}',
                     data: [
                         [1, {{ $number }}]
                     ],
-                    color: '#5D78FF'
+                    color: '{{ $color[$color_int++] }}'
                 },
             @endforeach
 

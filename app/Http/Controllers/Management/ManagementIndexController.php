@@ -74,6 +74,9 @@ class ManagementIndexController extends Controller
             ->orderBy(DB::raw('SUM(cart_product.number)'), 'desc')
             ->get();
 
+        $color =['grey','black','yellow','pink','red','green','black','yellow','pink','red','green','black','yellow','pink','red','green'];
+        $color_int = 0;
+
         foreach ($best_selling_category as $category) {
             $best_selling_categories[] = [
                 'category_name' => $category->category_name,
@@ -81,10 +84,11 @@ class ManagementIndexController extends Controller
             ];
         }
         $best_selling_categories = collect($best_selling_categories);
-$best_selling_categories = $best_selling_categories->groupBy('category_name')->take(5);
+$best_selling_categories = $best_selling_categories->groupBy('category_name');
 $best_selling_categories = $best_selling_categories->map(function ($categoryGroup){
-    return collect($categoryGroup)->sum('number') ;
+    return collect($categoryGroup)->sum('number');
 });
+
 
 
         $highest_orders = Order::orderByDesc('order_price')
@@ -96,7 +100,6 @@ $best_selling_categories = $best_selling_categories->map(function ($categoryGrou
             ->orderByDesc('id')
             ->take(5)
             ->get();
-
 
         $year_sales =array();
         $month = 1;
@@ -120,7 +123,7 @@ $best_selling_categories = $best_selling_categories->map(function ($categoryGrou
         }
 
 
-        return view('/management/index', compact('year_sales' ,'total_order','best_selling_categories','best_selling_products_category','highest_orders','all_sales','day_sales','day_sales_product','orders','pending_order', 'completed_order', 'total_product', 'total_category', 'total_user','best_selling_products'));
+        return view('/management/index', compact('color','color_int','year_sales' ,'total_order','best_selling_categories','best_selling_products_category','highest_orders','all_sales','day_sales','day_sales_product','orders','pending_order', 'completed_order', 'total_product', 'total_category', 'total_user','best_selling_products'));
     }
 }
 
