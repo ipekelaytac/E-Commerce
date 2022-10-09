@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('product_name',150);
             $table->text('comment');
             $table->decimal('price',6,2);
+            $table->increments('stock')->default('0');
             $table->timestamps();
         });
     }

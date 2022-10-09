@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\CartProduct;
 use App\Models\Order;
+use App\Models\product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -34,6 +36,17 @@ class PaymentController extends Controller
         $order['order_price'] = Cart::subtotal();
 
         Order::create($order);
+        $cartItems = DB::table('cart_product')
+            ->where('main_cart_id', session('active_cart_id'))
+            ->get();
+        foreach ($cartItems as $cartItem) {
+            DB::table('products')
+                ->where('id',$cartItem->product_id)
+                ->decrement(
+                'stock',
+                $cartItem->number
+        );}
+
         Cart::destroy();
         session()->forget('active_cart_id');
 

@@ -8,6 +8,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Product;
 use App\Models\mainCart;
 use App\Models\CartProduct;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class CartController extends Controller
@@ -18,9 +19,10 @@ class CartController extends Controller
     }
     public function add()
     {
-
         $product = Product::with('detail')->find(\request('id'));
-        $cartItem=Cart::add($product->id, $product->product_name, 1 , $product->price, 0,['slug' =>$product->slug,'product_image' =>$product->detail->product_image]);
+        $cartItem=Cart::add($product->id, $product->product_name, 1 , $product->price, 0,['slug' =>$product->slug,'product_image' =>$product->detail->product_image,'stock'=>$product->stock],);
+
+
         if(auth()->check())
         {
             $active_cart_id = session('active_cart_id');
@@ -37,6 +39,7 @@ class CartController extends Controller
                 ['number' => $cartItem->qty, 'price'=>$product->price,'situation'=>'beklemede']
             );
         }
+
         return redirect()->route('cart')
             ->with('message_type','success')
             ->with('message','Ürün sepete eklendi');

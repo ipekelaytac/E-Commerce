@@ -61,7 +61,17 @@
                                         class="img-responsive" src="{{ $product->detail->product_image!=null ? asset('uploads/products/' . $product->detail->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}"></a>
                                 <p><a href="{{ route('products', $product->slug) }}">{{$product->product_name}}</a></p>
                                 <p class="price">{{$product->price, 2}}</p>
-                                <p><a href="#" class="btn btn-theme">Sepete Ekle</a></p>
+                                     @if($product->stock < 10 && $product->stock < 0)
+                                        <p> Stokta son {{$product->stock}} ürün var.</p>
+                                    @endif
+                                @if($product->stock == 0)
+                                    <p> Stokta ürün yok!</p>
+                                @endif
+                                <form action="{{route('cart.add')}}" method="post">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="id" value="{{ $product->id }}">
+                                    <input type="submit" class="btn btn-theme" value="Sepete Ekle">
+                                </form>
                             </div>
                         @endforeach
 

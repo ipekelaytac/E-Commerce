@@ -13,7 +13,7 @@
                     <h3>Ödeme Bilgileri</h3>
                     <div class="form-group">
                         <label for="kartno">Kredi Kartı Numarası</label>
-                        <input type="text" class="form-control kredikarti" id="cardnumber" name="cardnumber" style="font-size:20px;" required>
+                        <input type="text" class="form-control kredikarti" id="cardnumber" name="cardnumber" style="font-size:20px;" value="2222222222222222" required>
                     </div>
                     <div class="form-group">
                         <label for="cardexpiredatemonth">Son Kullanma Tarihi</label>
@@ -36,7 +36,7 @@
                         <label for="cardcvv2">CVV (Güvenlik Numarası)</label>
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="text" class="form-control kredikarti_cvv" name="cardcvv2" id="cardcvv2" required>
+                                <input type="text" class="form-control kredikarti_cvv" name="cardcvv2" id="cardcvv2" value="222" required>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-md-7">
                     <h4>Ödenecek Tutar</h4>
-                    <span class="price">{{ Cart::total()  }} ₺<small>TL</small></span>
+                    <span class="price">{{ Cart::subtotal()  }} ₺<small>TL</small></span>
 
                     <h4>İletişim Fatura bilgileri</h4>
                     <div class="row">

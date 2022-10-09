@@ -36,7 +36,7 @@ class ManagementProductController extends Controller
 
     public function save($id = 0)
     {
-        $data = request()->only('product_name', 'slug', 'comment', 'price');
+        $data = request()->only('product_name', 'slug', 'comment', 'price','stock');
         $data = preg_replace("/^<p.*?>/", "",$data);
         $data = preg_replace("|</p>$|", "",$data);
 

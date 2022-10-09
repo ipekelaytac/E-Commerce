@@ -68,6 +68,13 @@
                                     </div>
                                 </div>
                                 <div class="row mg-t-10">
+                                    <label class="col-sm-4 form-control-label"><span class="tx-danger">*</span> Stock</label>
+                                    <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                        <input type="text" class="form-control form-control-sm" name="stock"
+                                               value="{{ old('price', $entry->stock) }}" required/>
+                                    </div>
+                                </div>
+                                <div class="row mg-t-10">
                                     <label class="col-sm-4 form-control-label"><span class="tx-danger">*</span> Öne
                                         Çıkar</label>
                                     <div class="checkbox">

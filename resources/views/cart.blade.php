@@ -22,7 +22,8 @@
                             </td>
                             <td>
                                 <a href="{{ route('products',Str::slug($productCartItem->name)) }}">
-                                   <p> {{ $productCartItem->name }}</p>
+                                   <p> {{ $productCartItem->name }}
+                                   </p>
                                     <form action="{{ route('cart.delete',$productCartItem->rowId) }}" method="post">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
@@ -31,6 +32,7 @@
                                     </a>
                             </td>
                             <td>{{$productCartItem->price}} ₺</td>
+
                             <td>
                                 <a href="#" class="btn btn-xs btn-default product-reduce-the-amount"
                                    data-id="{{ $productCartItem->rowId}}"
@@ -38,18 +40,24 @@
                                 <span style="padding: 10px 20px">{{$productCartItem->qty}}</span>
                                 <a href="#" class="btn btn-xs btn-default product-increase-the-amount"
                                    data-id="{{ $productCartItem->rowId}}"
-                                   data-number="{{ $productCartItem->qty+1 }}">+</a>
+                                   data-number="{{ $productCartItem->qty+1 }}">+</a><br>
+                                <br>
+                                @if($productCartItem->options->stock < 10)
+                                    <span> Stokta son {{$productCartItem->options->stock}} ürün var.</span>
+                                @endif
+
                             </td>
                             <td class="text-right">{{$productCartItem->subtotal}}</td>
                         </tr>
                     @endforeach
                     <tr>
-                        <th colspan="4" class="text-right">Ürünlerin tutarı</th>
-                        <td class="text-right">{{ Cart::subtotal() }} ₺</td>
-                        <th colspan="4" class="text-right">KDV</th>
-                        <td class="text-right">{{Cart::Tax()}} ₺</td>
                         <th colspan="4" class="text-right">Toplam tutar</th>
-                        <td class="text-right">{{Cart::total()}} ₺</td>
+                        <td class="text-right">{{Cart::subtotal()}} ₺</td>
+
+                    </tr>
+                    <tr>
+
+
 
                     </tr>
                 </table>
@@ -58,12 +66,27 @@
                     {{ method_field('DELETE') }}
                     <input type="submit" class="btn btn-info btn-lg" value="Sepeti Boşalt">
                 </form>
-                <a href="{{route('payment')}}" class="btn btn-success pull-right btn-lg">Ödeme Yap</a>
+                @foreach(Cart::content() as $productCartItem)
+                    @if($productCartItem->options->stock < $productCartItem->qty)
+{{--                        @if($stock_errors = count(Cart::content()) > 0 )--}}
+                        {{ $productCartItem->name }},
+{{--                        @endif--}}
+                    @endif
+                @endforeach
+
+{{--                @if($stock_errors > 0)--}}
+{{--                    <p>   Stok Sorunu!</p>--}}
+{{--                    <a  class="btn btn-success pull-right btn-lg">Ödeme Yap</a>--}}
+{{--                @else--}}
+                    <a href="{{route('payment')}}" class="btn btn-success pull-right btn-lg">Ödeme Yap</a>
+{{--                @endif--}}
+
             @else
                 <tr>
                     <td colspan="5">Henüz sepette ürün yok</td>
                 </tr>
             @endif
+
 
         </div>
     </div>

@@ -30,6 +30,12 @@
                 <div class="col-md-7">
                     <h1>{{$product->product_name}}</h1>
                     <p class="price">{{$product->price,2}} ₺</p>
+                    @if($product->stock < 10 && $product->stock < 0)
+                        <p> Stokta son {{$product->stock}} ürün var.</p>
+                    @endif
+                    @if($product->stock == 0)
+                        <p> Stokta ürün yok!</p>
+                    @endif
                     <form action="{{route('cart.add')}}" method="post">
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value="{{ $product->id }}">
