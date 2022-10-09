@@ -35,12 +35,18 @@
                     @endif
                     @if($product->stock == 0)
                         <p> Stokta ürün yok!</p>
+                        <form action="{{route('cart.add')}}" method="post">
+                            {{ csrf_field() }}
+                            <input type="submit" class="btn btn-theme" value="Sepete Ekle" disabled>
+                        </form>
                     @endif
+                    @if($product->stock > 0)
                     <form action="{{route('cart.add')}}" method="post">
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value="{{ $product->id }}">
                         <input type="submit" class="btn btn-theme" value="Sepete Ekle">
                     </form>
+                        @endif
                 </div>
             </div>
 

@@ -76,7 +76,8 @@
 
                 @if($stock_error > 0)
                     <p>   Stok Sorunu!</p>
-                    <a  class="btn btn-success pull-right btn-lg">Ödeme Yap</a>
+                    <a href="{{route('payment')}}" class="btn btn-success pull-right btn-lg" disabled>Ödeme Yap</a>
+
                 @else
                     <a href="{{route('payment')}}" class="btn btn-success pull-right btn-lg">Ödeme Yap</a>
                 @endif

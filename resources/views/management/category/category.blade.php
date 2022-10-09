@@ -56,7 +56,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>Üst Kategori</th>
-                                <th>Slug</th>
                                 <th>Kategori Adı</th>
                                 <th>Kayıt Tarihi</th>
                                 <th class="tx-center">Eylemler</th>
@@ -70,7 +69,6 @@
                                 <tr>
                                     <td class="align-middle">{{ $entry->id }}</td>
                                     <td class="align-middle">{{ $entry->top_category->category_name }}</td>
-                                    <td class="align-middle">{{ $entry->slug }}</td>
                                     <td class="align-middle">{{ $entry->category_name }}</td>
                                     <td class="align-middle">{{ $entry->created_at }}</td>
                                     <td class="tx-center">

@@ -22,6 +22,12 @@ class CategoryController extends Controller
         }else if ($order == 'yeni') {
             $products = $categories->products()->distinct()->OrderByDesc('created_at')->get();
         }
+        else if ($order == 'fiyatagoreartan') {
+            $products = $categories->products()->distinct()->OrderBy('price','ASC')->get();
+        }
+        else if ($order == 'fiyatagoreazalan') {
+            $products = $categories->products()->distinct()->OrderByDesc('price')->get();
+        }
         else{
             $products = $categories->products()->distinct()->get();
         }

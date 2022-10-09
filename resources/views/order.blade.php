@@ -30,10 +30,10 @@
                     <th colspan="4">Toplam Tutar</th>
                     <th colspan="2">{{ $order->order_price }} ₺</th>
                 </tr>
-                <tr>
-                    <th>Toplam Tutar (KDV Dahil)</th>
-                    <th>{{ $order->order_price * ((100+config('cart.tax'))/100) }} ₺</th>
-                </tr>
+{{--                <tr>--}}
+{{--                    <th>Toplam Tutar (KDV Dahil)</th>--}}
+{{--                    <th>{{ $order->order_price * ((100+config('cart.tax'))/100) }} ₺</th>--}}
+{{--                </tr>--}}
                 <tr>
                     <th colspan="4">Sipariş Durumu</th>
                     <th colspan="2">{{ $order->situation }}</th>

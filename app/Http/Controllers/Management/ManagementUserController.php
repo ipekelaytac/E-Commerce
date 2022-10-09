@@ -46,7 +46,7 @@ class ManagementUserController extends Controller
     public function index()
     {
 
-            $list = User::orderByDesc('created_at')->get(0);
+            $list = User::orderByDesc('created_at')->get();
 
 
         return view('/management/user/users', compact('list'));
