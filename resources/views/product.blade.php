@@ -30,7 +30,7 @@
                 <div class="col-md-7">
                     <h1>{{$product->product_name}}</h1>
                     <p class="price">{{$product->price,2}} ₺</p>
-                    @if($product->stock < 10 && $product->stock < 0)
+                    @if($product->stock < 10 && $product->stock > 0)
                         <p> Stokta son {{$product->stock}} ürün var.</p>
                     @endif
                     @if($product->stock == 0)

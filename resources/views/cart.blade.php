@@ -68,18 +68,18 @@
                 </form>
                 @foreach(Cart::content() as $productCartItem)
                     @if($productCartItem->options->stock < $productCartItem->qty)
-{{--                        @if($stock_errors = count(Cart::content()) > 0 )--}}
+                        @if($stock_error > 0 )
                         {{ $productCartItem->name }},
-{{--                        @endif--}}
+                        @endif
                     @endif
                 @endforeach
 
-{{--                @if($stock_errors > 0)--}}
-{{--                    <p>   Stok Sorunu!</p>--}}
-{{--                    <a  class="btn btn-success pull-right btn-lg">Ödeme Yap</a>--}}
-{{--                @else--}}
+                @if($stock_error > 0)
+                    <p>   Stok Sorunu!</p>
+                    <a  class="btn btn-success pull-right btn-lg">Ödeme Yap</a>
+                @else
                     <a href="{{route('payment')}}" class="btn btn-success pull-right btn-lg">Ödeme Yap</a>
-{{--                @endif--}}
+                @endif
 
             @else
                 <tr>

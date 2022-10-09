@@ -15,7 +15,17 @@ class CartController extends Controller
 {
     public function index()
     {
-        return view('cart');
+        $stock = Cart::content();
+        foreach ($stock as $stock_errors){
+            if($stock_errors->options->stock < $stock_errors->qty){
+                $stock_error = Cart::content()->count();
+            }
+        }
+        if(empty($stock_error)){
+            $stock_error = 0;
+        }
+
+        return view('cart',compact('stock_error'));
     }
     public function add()
     {
