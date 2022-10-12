@@ -557,7 +557,6 @@ class ComposerStaticInit6fc85fd1b8626d51b29de38be6af23e7
         'App\\Models\\CartProduct' => __DIR__ . '/../..' . '/app/Models/CartProduct.php',
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
         'App\\Models\\ProductDetail' => __DIR__ . '/../..' . '/app/Models/ProductDetail.php',
-        'App\\Models\\Settings' => __DIR__ . '/../..' . '/app/Models/Settings.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\UserDetail' => __DIR__ . '/../..' . '/app/Models/UserDetail.php',
         'App\\Models\\category' => __DIR__ . '/../..' . '/app/Models/category.php',

@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FavoriteProductsController;
 use App\Http\Controllers\Management\ManagementUserController;
 use App\Http\Controllers\Management\ManagementIndexController;
 use App\Http\Controllers\Management\ManagementCategoryController;
@@ -75,6 +76,11 @@ Route::group(['prefix' => 'sepet'], function () {
     Route::delete('/kaldir/{rowid}', [CartController::class, 'delete'])->name('cart.delete');
     Route::delete('/bosalt', [CartController::class, 'unload'])->name('cart.unload');
     Route::patch('/guncelle/{rowid}', [CartController::class, 'update'])->name('cart.update');
+});
+Route::group(['prefix' => 'favoriurunler'], function () {
+    Route::get('/', [FavoriteProductsController::class, 'index'])->name('favorite_products');
+    Route::post('/ekle', [FavoriteProductsController::class, 'add'])->name('favorite_products.add');
+    Route::get('/kaldir/{id}', [FavoriteProductsController::class, 'delete'])->name('favorite_products.delete');
 });
 
 Route::get('/odeme', [paymentController::class, 'index'])->name('payment');

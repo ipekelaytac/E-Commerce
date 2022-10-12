@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Settings extends Model
+class FavoriteProductCategory extends Model
 {
     use HasFactory;
-    protected $table = 'settings';
+    protected $table = "favorite_product_category";
+    protected  $guarded =[];
     public $timestamps = false;
-    protected $fillable = ['key', 'value'];
+
 }

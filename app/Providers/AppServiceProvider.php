@@ -51,8 +51,8 @@ class AppServiceProvider extends ServiceProvider
 
 
 
-        foreach(Settings::all() as $settings) {
-            Config::set('key.' . $settings->key, $settings->value);
-        }
+//        foreach(Settings::all() as $settings) {
+//            Config::set('key.' . $settings->key, $settings->value);
+//        }
     }
 }

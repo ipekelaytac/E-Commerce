@@ -47,6 +47,11 @@
                         <input type="submit" class="btn btn-theme" value="Sepete Ekle">
                     </form>
                         @endif
+{{--                    <form action="{{route('favorite_products.add')}}" method="post">--}}
+{{--                        {{ csrf_field() }}--}}
+{{--                        <input type="hidden" name="id" value="{{ $product->id }}">--}}
+{{--                        <input type="submit" class="btn btn-theme" value="fav Ekle">--}}
+{{--                    </form>--}}
                 </div>
             </div>
 

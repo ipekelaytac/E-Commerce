@@ -16,7 +16,7 @@ class IndexController extends Controller
         $products_slider = ProductDetail::with('product')
             ->where('show_slider', 1)
             ->orderBy('updated_at', 'desc')
-            ->take(get_setting('index_list_product_number'))->get();
+            ->take(3)->get();
 
         $product_opportunity_of_the_day = ProductDetail::with('product')
             ->where('show_opportunity_of_the_day', 1)
@@ -26,19 +26,19 @@ class IndexController extends Controller
         $products_featured = ProductDetail::with('product')
             ->where('show_featured', 1)
             ->orderBy('updated_at', 'desc')
-            ->take(get_setting('index_featured_product_number'))->get();
+            ->take(4)->get();
 
 
         $products_lots_selling = ProductDetail::with('product')
             ->where('show_lots_selling', 1)
             ->orderBy('updated_at', 'desc')
-            ->take(get_setting('index_lots_selling_product_number'))->get();
+            ->take(4)->get();
 
 
         $products_discount = ProductDetail::with('product')
             ->where('show_discount', 1)
             ->orderBy('updated_at', 'desc')
-            ->take(get_setting('index_discount_product_number'))->get();
+            ->take(4)->get();
 
 
         return view('index', compact('categories', 'products_slider', 'product_opportunity_of_the_day', 'products_featured', 'products_lots_selling', 'products_discount'));

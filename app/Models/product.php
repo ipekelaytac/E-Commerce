@@ -21,4 +21,5 @@ class product extends Model
     {
         return $this->hasOne('App\Models\ProductDetail')->withDefault();
     }
+
 }
