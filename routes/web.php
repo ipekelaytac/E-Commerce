@@ -81,6 +81,8 @@ Route::group(['prefix' => 'favoriurunler'], function () {
     Route::get('/', [FavoriteProductsController::class, 'index'])->name('favorite_products');
     Route::post('/ekle', [FavoriteProductsController::class, 'add'])->name('favorite_products.add');
     Route::get('/kaldir/{id}', [FavoriteProductsController::class, 'delete'])->name('favorite_products.delete');
+    Route::get('/{slug_categoryname}', [FavoriteProductsController::class, 'category'])->name('favorite_category');
+
 });
 
 Route::get('/odeme', [paymentController::class, 'index'])->name('payment');

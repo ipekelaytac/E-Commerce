@@ -3,18 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\FavoriteProduct;
+use App\Models\FavoriteProductCategory;
 use Illuminate\Http\Request;
 
 class FavoriteProductsController extends Controller
 {
     public function index()
     {
-        $favorite_products = FavoriteProduct::where([
-        ['user_id' ,'=', auth()->id()],
-       ['favorite_product_category_id' ,'=', null],
-])->orderByDesc('id')->get();
+        $favorite_products = FavoriteProduct::where('user_id' , auth()->id())
+//        where([['user_id' ,'=', auth()->id()],
+//        ['favorite_product_category_id' ,'=', null],])
+            ->orderByDesc('id')->get();
+        $favorite_categories = FavoriteProductCategory::where('user_id' , auth()->id())
+            ->orderByDesc('id')->get();
 
-        return view('favorite_products', compact('favorite_products'));
+        return view('favorite_products', compact('favorite_products','favorite_categories'));
+    }
+
+    public function category($slug_categoryname)
+    {
+        $favorite_category = FavoriteProductCategory::whereSlug($slug_categoryname)->firstOrFail();
+
+        $favorite_products = FavoriteProduct::where([
+            ['user_id' ,'=', auth()->id()],
+            ['favorite_product_category_id' ,'=', $favorite_category->id],])
+            ->orderByDesc('id')->get();
+        $favorite_categories = FavoriteProductCategory::where('user_id' , auth()->id())
+            ->orderByDesc('id')->get();
+
+        return view('favorite_products', compact('favorite_products','favorite_categories'));
     }
 
 

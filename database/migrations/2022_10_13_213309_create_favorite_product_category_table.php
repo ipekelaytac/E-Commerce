@@ -16,6 +16,9 @@ class CreateFavoriteProductCategoryTable extends Migration
         Schema::create('favorite_product_category', function (Blueprint $table) {
             $table->increments('id');
             $table->string('category_name',30);
+            $table->string('slug',40);
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
         });
     }
 
