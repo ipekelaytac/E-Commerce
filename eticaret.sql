@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 13 Eki 2022, 00:33:32
+-- Üretim Zamanı: 14 Eki 2022, 00:57:08
 -- Sunucu sürümü: 10.4.21-MariaDB
 -- PHP Sürümü: 7.4.29
 
@@ -212,10 +212,9 @@ CREATE TABLE `favorite_product` (
 --
 
 INSERT INTO `favorite_product` (`id`, `user_id`, `favorite_product_category_id`, `product_id`) VALUES
-(2, 18, 1, 42),
-(7, 17, NULL, 14),
-(9, 17, NULL, 25),
-(10, 17, 1, 7);
+(3, 17, 1, 7),
+(5, 17, 2, 29),
+(6, 17, 3, 27);
 
 -- --------------------------------------------------------
 
@@ -225,15 +224,20 @@ INSERT INTO `favorite_product` (`id`, `user_id`, `favorite_product_category_id`,
 
 CREATE TABLE `favorite_product_category` (
   `id` int(10) UNSIGNED NOT NULL,
-  `category_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL
+  `category_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Tablo döküm verisi `favorite_product_category`
 --
 
-INSERT INTO `favorite_product_category` (`id`, `category_name`) VALUES
-(1, 'klşkşl');
+INSERT INTO `favorite_product_category` (`id`, `category_name`, `slug`, `user_id`) VALUES
+(1, 'okmol', 'okmol', 17),
+(2, 'gdfdgf', 'rert', 17),
+(3, 'qwe', 'qwe', 17),
+(4, 'kjkkj', 'kjkj', 17);
 
 -- --------------------------------------------------------
 
@@ -264,7 +268,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (10, '2022_03_01_122257_create_order_table', 1),
 (11, '2022_03_01_123428_create_user_detail_table', 1),
 (12, '2022_10_12_131623_create_favorite_product_category_table', 2),
-(13, '2022_10_12_183947_create_favorite_product_table', 2);
+(13, '2022_10_12_183947_create_favorite_product_table', 2),
+(14, '2022_10_13_212814_create_favorite_product_category_table', 3),
+(15, '2022_10_13_213309_create_favorite_product_category_table', 4),
+(16, '2022_10_13_214025_create_favorite_product_table', 5);
 
 -- --------------------------------------------------------
 
@@ -543,7 +550,8 @@ ALTER TABLE `favorite_product`
 -- Tablo için indeksler `favorite_product_category`
 --
 ALTER TABLE `favorite_product_category`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `favorite_product_category_user_id_foreign` (`user_id`);
 
 --
 -- Tablo için indeksler `migrations`
@@ -631,19 +639,19 @@ ALTER TABLE `category_product`
 -- Tablo için AUTO_INCREMENT değeri `favorite_product`
 --
 ALTER TABLE `favorite_product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `favorite_product_category`
 --
 ALTER TABLE `favorite_product_category`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `order`
@@ -705,6 +713,12 @@ ALTER TABLE `favorite_product`
   ADD CONSTRAINT `favorite_product_favorite_product_category_id_foreign` FOREIGN KEY (`favorite_product_category_id`) REFERENCES `favorite_product_category` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `favorite_product_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `favorite_product_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Tablo kısıtlamaları `favorite_product_category`
+--
+ALTER TABLE `favorite_product_category`
+  ADD CONSTRAINT `favorite_product_category_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
