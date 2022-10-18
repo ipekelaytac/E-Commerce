@@ -5,9 +5,9 @@
         <div class="bg-content">
             <h2>Favori Ürünler</h2>
 
-                <option value="">Favori Listelerim</option>
-                @foreach($favorite_categories as $category)
-                    <a href="{{ route('favorite_category', $category->slug) }}" >{{ $category->category_name }}</a>
+                <option value="">Koleksiyonum</option>
+                @foreach($favorite_collections as $collection)
+                    <a href="{{ route('favorite_collection', $collection->slug) }}" >{{ $collection->collection_name }}</a>
                 @endforeach
             @include('layouts.partials.alert')
             <table class="table table-bordererd table-hover">
@@ -19,12 +19,12 @@
                     @foreach($favorite_products as $favorite_product)
                         <tr>
                             <td>
-                                <a href="">
+                                <a href="{{ route('products', $favorite_product->product->slug) }}">
                                     <img  class="img-responsive" src="{{ $favorite_product->product->detail->product_image!=null ? asset('uploads/products/' . $favorite_product->product->detail->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}">
                                 </a>
                             </td>
                             <td>
-                                <a href="">
+                                <a href="{{ route('products', $favorite_product->product->slug) }}">
                                     <p>{{ $favorite_product->product->product_name }}
                                     </p>
                                         <a href="{{ route('favorite_products.delete',$favorite_product->id ) }}"><input  type="submit" class="btn btn-danger btn-xs" value="Favorilerden kaldır"></a>

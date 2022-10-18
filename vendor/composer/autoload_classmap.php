@@ -42,7 +42,7 @@ return array(
     'App\\Mail\\UserRecordMail' => $baseDir . '/app/Mail/UserRecordMail.php',
     'App\\Models\\CartProduct' => $baseDir . '/app/Models/CartProduct.php',
     'App\\Models\\FavoriteProduct' => $baseDir . '/app/Models/FavoriteProduct.php',
-    'App\\Models\\FavoriteProductCategory' => $baseDir . '/app/Models/FavoriteProductCategory.php',
+    'App\\Models\\FavoriteProductCollection' => $baseDir . '/app/Models/FavoriteProductCollection.php',
     'App\\Models\\Order' => $baseDir . '/app/Models/Order.php',
     'App\\Models\\ProductDetail' => $baseDir . '/app/Models/ProductDetail.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',

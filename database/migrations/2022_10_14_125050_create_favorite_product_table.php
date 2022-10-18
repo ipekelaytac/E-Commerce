@@ -16,10 +16,11 @@ class CreateFavoriteProductTable extends Migration
         Schema::create('favorite_product', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('favorite_product_category_id')->unsigned()->nullable();
+            $table->integer('favorite_product_collection_id')->unsigned()->nullable();
             $table->integer('product_id')->unsigned();
+            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
-            $table->foreign('favorite_product_category_id')->references('id')->on('favorite_product_category')->onDelete('cascade');
+            $table->foreign('favorite_product_collection_id')->references('id')->on('favorite_product_collection')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }

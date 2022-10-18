@@ -65,7 +65,7 @@ Route::group(['prefix' => 'yonetim', 'namespace' => 'Management'], function () {
 
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
-Route::get('/kategoriler/{slug_categoryname}', [CategoryController::class, 'index'])->name('categories');
+Route::get('/kategoriler/{slug_collectionname}', [CategoryController::class, 'index'])->name('categories');
 Route::get('/urunler/{slug_productname}', [ProductController::class, 'index'])->name('products');
 Route::post('/ara', [ProductController::class, 'search'])->name('search');
 Route::get('/ara', [ProductController::class, 'search'])->name('search');
@@ -81,7 +81,7 @@ Route::group(['prefix' => 'favoriurunler'], function () {
     Route::get('/', [FavoriteProductsController::class, 'index'])->name('favorite_products');
     Route::post('/ekle', [FavoriteProductsController::class, 'add'])->name('favorite_products.add');
     Route::get('/kaldir/{id}', [FavoriteProductsController::class, 'delete'])->name('favorite_products.delete');
-    Route::get('/{slug_categoryname}', [FavoriteProductsController::class, 'category'])->name('favorite_category');
+    Route::get('/{slug_collectionname}', [FavoriteProductsController::class, 'collection'])->name('favorite_collection');
 
 });
 

@@ -557,7 +557,7 @@ class ComposerStaticInit6fc85fd1b8626d51b29de38be6af23e7
         'App\\Mail\\UserRecordMail' => __DIR__ . '/../..' . '/app/Mail/UserRecordMail.php',
         'App\\Models\\CartProduct' => __DIR__ . '/../..' . '/app/Models/CartProduct.php',
         'App\\Models\\FavoriteProduct' => __DIR__ . '/../..' . '/app/Models/FavoriteProduct.php',
-        'App\\Models\\FavoriteProductCategory' => __DIR__ . '/../..' . '/app/Models/FavoriteProductCategory.php',
+        'App\\Models\\FavoriteProductCollection' => __DIR__ . '/../..' . '/app/Models/FavoriteProductCollection.php',
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
         'App\\Models\\ProductDetail' => __DIR__ . '/../..' . '/app/Models/ProductDetail.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',

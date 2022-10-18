@@ -10,6 +10,8 @@
             @endforeach
             <li class="active">{{$product->product_name}}</li>
         </ol>
+        @include('layouts.partials.alert')
+
         <div class="bg-content">
             <div class="row">
                 <div class="col-md-5">
@@ -47,11 +49,11 @@
                         <input type="submit" class="btn btn-theme" value="Sepete Ekle">
                     </form>
                         @endif
-{{--                    <form action="{{route('favorite_products.add')}}" method="post">--}}
-{{--                        {{ csrf_field() }}--}}
-{{--                        <input type="hidden" name="id" value="{{ $product->id }}">--}}
-{{--                        <input type="submit" class="btn btn-theme" value="fav Ekle">--}}
-{{--                    </form>--}}
+                    <form action="{{route('favorite_products.add')}}" method="post">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{ $product->id }}">
+                        <input type="submit" class="btn btn-theme" value="fav Ekle">
+                    </form>
                 </div>
             </div>
 

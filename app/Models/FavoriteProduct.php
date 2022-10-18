@@ -10,7 +10,8 @@ class FavoriteProduct extends Model
     use HasFactory;
     protected $table = "favorite_product";
     protected  $guarded =[];
-    public $timestamps = false;
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
 
     public function favorite_user()
@@ -19,7 +20,7 @@ class FavoriteProduct extends Model
     }
     public function favorite_category()
 {
-    return $this->belongsToMany('App\Models\FavoriteProductCategory','favorite_product_category_id');
+    return $this->belongsToMany('App\Models\FavoriteProductCollection','favorite_product_collection_id');
 }
     public function product()
     {

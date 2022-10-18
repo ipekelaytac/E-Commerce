@@ -3,53 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\FavoriteProduct;
-use App\Models\FavoriteProductCategory;
+use App\Models\FavoriteProductCollection;
+use App\Models\product;
 use Illuminate\Http\Request;
+use function PHPUnit\Framework\isEmpty;
 
 class FavoriteProductsController extends Controller
 {
     public function index()
     {
-        $favorite_products = FavoriteProduct::where('user_id' , auth()->id())
-//        where([['user_id' ,'=', auth()->id()],
-//        ['favorite_product_category_id' ,'=', null],])
+        $favorite_products = FavoriteProduct::
+//        where('user_id' , auth()->id())
+        where([['user_id' ,'=', auth()->id()],
+        ['favorite_product_collection_id' ,'=', null],])
             ->orderByDesc('id')->get();
-        $favorite_categories = FavoriteProductCategory::where('user_id' , auth()->id())
+        $favorite_collections = FavoriteProductCollection::where('user_id' , auth()->id())
             ->orderByDesc('id')->get();
 
-        return view('favorite_products', compact('favorite_products','favorite_categories'));
+        return view('favorite_products', compact('favorite_products','favorite_collections'));
     }
 
-    public function category($slug_categoryname)
+    public function collection($slug_collectionname)
     {
-        $favorite_category = FavoriteProductCategory::whereSlug($slug_categoryname)->firstOrFail();
+        $favorite_collection = FavoriteProductCollection::whereSlug($slug_collectionname)->firstOrFail();
 
         $favorite_products = FavoriteProduct::where([
             ['user_id' ,'=', auth()->id()],
-            ['favorite_product_category_id' ,'=', $favorite_category->id],])
+            ['favorite_product_collection_id' ,'=', $favorite_collection->id],])
             ->orderByDesc('id')->get();
-        $favorite_categories = FavoriteProductCategory::where('user_id' , auth()->id())
+        $favorite_collections = FavoriteProductCollection::where('user_id' , auth()->id())
             ->orderByDesc('id')->get();
 
-        return view('favorite_products', compact('favorite_products','favorite_categories'));
+        return view('favorite_products', compact('favorite_products','favorite_collections'));
     }
 
 
     public function add()
     {
-//        $data = request()->only('favorite_product_category_id');
-//
-//
-//            $entry = FavoriteProduct::create($data);
-//            $entry = FavoriteProduct::create([
-//                'user_id' => auth()->id(),
-//                'product_id'=>$entry->id,
-//            ]);
-//
-//        return redirect()
-//            ->route('management.product.add', $entry->id)
-//            ->with('message', 'Favorilere eklendi.')
-//            ->with('message_type', 'success');
+        $product = Product::find(\request('id'));
+            FavoriteProduct::create([
+                'user_id' => auth()->id(),
+                'product_id'=>request('id'),
+            ]);
+
+        return redirect()
+            ->route('products', $product->slug)
+            ->with('message', 'Favorilere eklendi.')
+            ->with('message_type', 'success');
     }
 
     public function delete($id)
