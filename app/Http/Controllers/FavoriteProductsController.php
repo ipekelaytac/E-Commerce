@@ -7,6 +7,8 @@ use App\Models\FavoriteProductCollection;
 use App\Models\product;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isEmpty;
+use Illuminate\Support\Str;
+
 
 class FavoriteProductsController extends Controller
 {
@@ -23,7 +25,15 @@ class FavoriteProductsController extends Controller
         return view('favorite_products', compact('favorite_products','favorite_collections'));
     }
 
-    public function collection($slug_collectionname)
+    public function collection()
+    {
+        $favorite_collections = FavoriteProductCollection::where('user_id' , auth()->id())
+            ->orderByDesc('id')->get();
+
+        return view('favorite_collection', compact('favorite_collections'));
+    }
+
+    public function collection_product($slug_collectionname)
     {
         $favorite_collection = FavoriteProductCollection::whereSlug($slug_collectionname)->firstOrFail();
 
@@ -34,9 +44,33 @@ class FavoriteProductsController extends Controller
         $favorite_collections = FavoriteProductCollection::where('user_id' , auth()->id())
             ->orderByDesc('id')->get();
 
-        return view('favorite_products', compact('favorite_products','favorite_collections'));
+        return view('favorite_collection_product', compact('favorite_products','favorite_collection','favorite_collections'));
     }
 
+    public function collection_add()
+    {
+        $slug = Str::slug(request('collection_name'), '-');
+        FavoriteProductCollection::create([
+            'user_id' => auth()->id(),
+            'collection_name'=>request('collection_name'),
+            'slug'=>$slug,
+        ]);
+
+        return redirect()
+            ->route('collection')
+            ->with('message', 'Koleksiyon eklendi.')
+            ->with('message_type', 'success');
+    }
+    public function collection_delete($id)
+    {
+        $collection = FavoriteProductCollection::find($id);
+        $collection->delete();
+
+        return redirect()
+            ->route('collection')
+            ->with('message', 'Koleksiyon silindi')
+            ->with('message_type', 'success');
+    }
 
     public function add()
     {
