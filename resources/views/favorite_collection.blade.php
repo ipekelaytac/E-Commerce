@@ -18,7 +18,6 @@
                                 </button>
                             </form>
                         </th>
-
                     </tr>
                     @foreach($favorite_collections as $collection)
                         <tr>
@@ -28,17 +27,12 @@
                                     </p>
                                 </a>
                             </td>
-
                             <td>
                                 <li class="dropdown-item"><a class="dropdown-link tx-13 tx-gray-500" href="{{ route('collection_delete' , $collection->id) }}"><i class="icon-close mr-2"></i>Sil</a></li>
-
                             </td>
                         </tr>
                     @endforeach
-
-
             </table>
-
         </div>
     </div>
 @endsection

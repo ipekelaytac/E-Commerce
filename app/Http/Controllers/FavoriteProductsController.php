@@ -24,7 +24,7 @@ class FavoriteProductsController extends Controller
 
         return view('favorite_products', compact('favorite_products','favorite_collections'));
     }
-    
+
     public function add()
     {
         $product = Product::find(\request('id'));
@@ -64,6 +64,7 @@ class FavoriteProductsController extends Controller
     {
         $favorite_collections = FavoriteProductCollection::where('user_id' , auth()->id())
             ->orderByDesc('id')->get();
+
 
         return view('favorite_collection', compact('favorite_collections'));
     }
