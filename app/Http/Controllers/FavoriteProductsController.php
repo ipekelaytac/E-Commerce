@@ -24,6 +24,41 @@ class FavoriteProductsController extends Controller
 
         return view('favorite_products', compact('favorite_products','favorite_collections'));
     }
+    
+    public function add()
+    {
+        $product = Product::find(\request('id'));
+        $empty = FavoriteProduct::where('user_id', auth()->id())
+            ->where('product_id',request('id'))
+            ->where('favorite_product_collection_id',NULL)
+            ->count();
+        if($empty==0){
+            FavoriteProduct::create([
+                'user_id' => auth()->id(),
+                'product_id'=>request('id'),
+            ]);
+        }
+        else{
+            return redirect()
+                ->route('products', $product->slug)
+                ->with('message', 'Bu ürün favorilerde var!')
+                ->with('message_type', 'warning');
+        }
+        return redirect()
+            ->route('products', $product->slug)
+            ->with('message', 'Favorilere eklendi.')
+            ->with('message_type', 'success');
+    }
+    public function delete($id)
+    {
+        $favorite_products = FavoriteProduct::find($id);
+        $favorite_products->delete();
+
+        return redirect()
+            ->route('favorite_products')
+            ->with('message', 'Ürün silindi')
+            ->with('message_type', 'success');
+    }
 
     public function collection()
     {
@@ -71,30 +106,29 @@ class FavoriteProductsController extends Controller
             ->with('message', 'Koleksiyon silindi')
             ->with('message_type', 'success');
     }
-
-    public function add()
+    public function collection_product_add()
     {
-        $product = Product::find(\request('id'));
+        $product = Product::find(\request('product_id'));
+        $empty = FavoriteProduct::where('user_id', auth()->id())
+            ->where('product_id',request('product_id'))
+            ->where('favorite_product_collection_id',request('collection_id'))
+            ->count();
+        if($empty==0){
             FavoriteProduct::create([
                 'user_id' => auth()->id(),
-                'product_id'=>request('id'),
+                'product_id'=>request('product_id'),
+                'favorite_product_collection_id'=>request('collection_id'),
             ]);
-
+        }
+        else{
+            return redirect()
+                ->route('products', $product->slug)
+                ->with('message', 'Bu koleksiyonda ürün var!')
+                ->with('message_type', 'warning');
+        }
         return redirect()
             ->route('products', $product->slug)
-            ->with('message', 'Favorilere eklendi.')
+            ->with('message', 'Koleksiyona eklendi.')
             ->with('message_type', 'success');
     }
-
-    public function delete($id)
-    {
-        $favorite_products = FavoriteProduct::find($id);
-        $favorite_products->delete();
-
-        return redirect()
-            ->route('favorite_products')
-            ->with('message', 'Ürün silindi')
-            ->with('message_type', 'success');
-    }
-
 }

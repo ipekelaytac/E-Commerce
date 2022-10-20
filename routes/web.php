@@ -84,7 +84,10 @@ Route::group(['prefix' => 'favoriurunler'], function () {
     Route::get('/koleksiyon', [FavoriteProductsController::class, 'collection'])->name('collection');
     Route::get('/koleksiyon/{slug_collectionname}', [FavoriteProductsController::class, 'collection_product'])->name('collection_product');
     Route::post('/koleksiyon/ekle', [FavoriteProductsController::class, 'collection_add'])->name('collection_add');
-    Route::get('/koleksiyon//kaldir/{id}', [FavoriteProductsController::class, 'collection_delete'])->name('collection_delete');
+    Route::get('/koleksiyon/kaldir/{id}', [FavoriteProductsController::class, 'collection_delete'])->name('collection_delete');
+    Route::post('/kolleksiyonaekle', [FavoriteProductsController::class, 'collection_product_add'])->name('collection_product_add');
+
+
 
 
 

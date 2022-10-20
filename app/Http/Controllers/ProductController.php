@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FavoriteProductCollection;
 use Illuminate\Http\Request;
 use App\Models\Product;
 class ProductController extends Controller
@@ -10,7 +11,12 @@ class ProductController extends Controller
     {
         $product = Product::whereSlug($slug_productname)->firstOrFail();
         $categories = $product->categories()->distinct()->get();
-        return view('product',compact('product','categories'));
+
+
+        $favorite_collections = FavoriteProductCollection::where('user_id' , auth()->id())
+            ->orderByDesc('id')->get();
+
+        return view('product',compact('product','categories','favorite_collections'));
     }
     public function search()
     {

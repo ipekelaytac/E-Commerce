@@ -11,6 +11,7 @@
             <li class="active">{{$product->product_name}}</li>
         </ol>
         @include('layouts.partials.alert')
+        @include('layouts.partials.errors')
 
         <div class="bg-content">
             <div class="row">
@@ -54,6 +55,40 @@
                         <input type="hidden" name="id" value="{{ $product->id }}">
                         <input type="submit" class="btn btn-theme" value="fav Ekle">
                     </form>
+
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Koleksiyona Ekle
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Koleksiyionlar</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                @foreach($favorite_collections as $collection)
+                                        <form action="{{route('collection_product_add')}}" method="post">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="product_id" value="{{ $product->id}}">
+                                            <input type="hidden" name="collection_id" value="{{ $collection->id }}">
+                                            <input type="submit" class="btn btn-theme" value="{{ $collection->collection_name }}">
+
+                                    </form>
+                                    @endforeach
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
