@@ -17,7 +17,7 @@ class CreateProductEvaluationTable extends Migration
             $table->increments('id');
             $table->integer('point')->nullable();
             $table->text('comment')->nullable();
-            $table->string('comment_image', 255)->nullable();
+            $table->string('comment_image', 50)->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('product_id')->unsigned();
             $table->integer('order_id')->unsigned();

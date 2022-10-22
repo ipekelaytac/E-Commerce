@@ -50,8 +50,6 @@ class OrderController extends Controller
 
     public function evaluation_save()
     {
-
-
         $controll = ProductEvaluation::where([
             ['user_id','=',auth()->id()],
             ['order_id','=',request('order_id')],
@@ -59,7 +57,7 @@ class OrderController extends Controller
             ->count();
         if ($controll > 0) {
             ProductEvaluation::where([
-                ['user_id', '=', auth()->id()],
+                ['user_id', '=', request('user_id')],
                 ['order_id', '=', request('order_id')],
                 ['product_id', '=', request('product_id')],
 
@@ -67,7 +65,7 @@ class OrderController extends Controller
                 ->update([
                     'point' => request('point'),
                     'comment' => request('comment'),
-                    'user_id' => auth()->id(),
+                    'user_id' => request('user_id'),
                     'product_id' => request('product_id'),
                     'order_id' => request('order_id'),
                 ]);
@@ -76,14 +74,14 @@ class OrderController extends Controller
             ProductEvaluation::create([
                 'point' => request('point'),
                 'comment' => request('comment'),
-                'user_id' => auth()->id(),
+                'user_id' => request('user_id'),
                 'product_id' => request('product_id'),
                 'order_id' => request('order_id'),
             ]);
         }
 
         $image = ProductEvaluation::where([
-            ['user_id','=',auth()->id()],
+            ['user_id','=',request('user_id')],
             ['order_id','=',request('order_id')],
             ['product_id','=',request('product_id')],])
             ->firstOrFail();
@@ -100,7 +98,7 @@ class OrderController extends Controller
 
                 $comment_image->move('uploads/comments', $filename);
                 $image->updateOrCreate(
-                    ['comment_image' => $filename]
+                    ['comment_image' => $filename],
                 );
             }
         }

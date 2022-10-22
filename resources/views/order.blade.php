@@ -42,7 +42,7 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form action="{{route('order.evaluation_save')}}" method="post">
+                                        <form action="{{route('order.evaluation_save')}}" method="post" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             @foreach($evaluation_product as $evaluation)
                                                 @if($evaluation->product_id = $cart_product->product->id)
@@ -60,6 +60,7 @@
                                                                 <input type="file" id="comment_image" name="comment_image">
 
                                             <input type="hidden" name="product_id" value="{{ $cart_product->product->id}}">
+                                            <input type="hidden" name="user_id" value="{{ auth()->id()}}">
                                             <input type="hidden" name="order_id" value="{{$order->id}}">
                                                     <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
@@ -73,8 +74,16 @@
                                                 <input type="text" name="point" value="">
                                                 <p>yorum yap</p>
                                                 <input type="text" name="comment" value="">
+
+
+
                                                 <p>resim ekle</p>
                                                 <input type="file" id="comment_image" name="comment_image">
+
+
+
+
+
                                                 <input type="hidden" name="product_id" value="{{ $cart_product->product->id}}">
                                                 <input type="hidden" name="order_id" value="{{$order->id}}">
                                             </div>

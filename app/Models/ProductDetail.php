@@ -9,7 +9,6 @@ class ProductDetail extends Model
 {
     use HasFactory;
     protected $table = "product_detail";
-
     protected $guarded = [];
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
