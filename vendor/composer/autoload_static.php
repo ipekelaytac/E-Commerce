@@ -560,6 +560,7 @@ class ComposerStaticInit6fc85fd1b8626d51b29de38be6af23e7
         'App\\Models\\FavoriteProductCollection' => __DIR__ . '/../..' . '/app/Models/FavoriteProductCollection.php',
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
         'App\\Models\\ProductDetail' => __DIR__ . '/../..' . '/app/Models/ProductDetail.php',
+        'App\\Models\\ProductEvaluation' => __DIR__ . '/../..' . '/app/Models/ProductEvaluation.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\UserDetail' => __DIR__ . '/../..' . '/app/Models/UserDetail.php',
         'App\\Models\\category' => __DIR__ . '/../..' . '/app/Models/category.php',

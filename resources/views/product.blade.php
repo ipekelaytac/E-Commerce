@@ -33,6 +33,7 @@
                 <div class="col-md-7">
                     <h1>{{$product->product_name}}</h1>
                     <p class="price">{{$product->price,2}} ₺</p>
+                    <p>ürün puanı :{{$point,1}}</p>
                     @if($product->stock < 10 && $product->stock > 0)
                         <p> Stokta son {{$product->stock}} ürün var.</p>
                     @endif
@@ -50,6 +51,7 @@
                         <input type="submit" class="btn btn-theme" value="Sepete Ekle">
                     </form>
                         @endif
+                    @auth()
                     <form action="{{route('favorite_products.add')}}" method="post">
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value="{{ $product->id }}">
@@ -89,17 +91,34 @@
                             </div>
                         </div>
                     </div>
+                    @endauth
                 </div>
             </div>
-
             <div>
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#t1" data-toggle="tab">Ürün Açıklaması</a></li>
-                    <li role="presentation"><a href="#t2" data-toggle="tab">Yorumlar</a></li>
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="t1">{{$product->comment}}</div>
-                    <div role="tabpanel" class="tab-pane" id="t2">Henüz yorum yapılmadı.</div>
+                </div>
+            </div>
+            <div>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation"><a href="#t2" data-toggle="tab">Yorumlar</a></li>
+                </ul>
+                <div class="tab-content">
+                    @if(count($comments) == 0 )
+                        <div role="tabpanel" class="tab-pane active" id="t2">Henüz yorum yapılmadı.</div>
+                    @endif
+                    @foreach($comments as $comment )
+                        <hr>
+                            <div role="tabpanel" class="tab-pane active" id="t2">kullanıcı adı:{{ $comment->name_surname }}</div>
+                            <div role="tabpanel" class="tab-pane active" id="t2">yorum:{{ $comment->comment }}</div>
+                            <div role="tabpanel" class="tab-pane active" id="t2">puan:{{ $comment->point }}</div>
+                            <div role="tabpanel" class="tab-pane active" id="t2">resim:{{ $comment->comment_image }}</div>
+                            <div role="tabpanel" class="tab-pane active" id="t2">yorum tarihi:{{ $comment->updated_at }}</div>
+                            <hr>
+                        @endforeach
                 </div>
             </div>
 

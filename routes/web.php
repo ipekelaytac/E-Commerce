@@ -86,11 +86,6 @@ Route::group(['prefix' => 'favoriurunler'], function () {
     Route::post('/koleksiyon/ekle', [FavoriteProductsController::class, 'collection_add'])->name('collection_add');
     Route::get('/koleksiyon/kaldir/{id}', [FavoriteProductsController::class, 'collection_delete'])->name('collection_delete');
     Route::post('/kolleksiyonaekle', [FavoriteProductsController::class, 'collection_product_add'])->name('collection_product_add');
-
-
-
-
-
 });
 
 Route::get('/odeme', [paymentController::class, 'index'])->name('payment');
@@ -100,6 +95,7 @@ Route::post('/odeme', [paymentController::class, 'pay'])->name('pay');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/siparisler', [OrderController::class, 'index'])->name('orders');
     Route::get('/siparisler/{id}', [OrderController::class, 'detail'])->name('order');
+    Route::post('/siparisler/degerlendir/{id?}', [OrderController::class, 'evaluation_save'])->name('order.evaluation_save');
 });
 
 Route::group(['prefix' => 'kullanici'], function () {

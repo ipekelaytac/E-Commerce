@@ -65,7 +65,7 @@ class ManagementProductController extends Controller
                 ['show_slider' => $show_slider,'show_opportunity_of_the_day' => $show_opportunity_of_the_day,
                     'show_featured' => $show_featured,'show_lots_selling' => $show_lots_selling,
                     'show_discount' => $show_discount]
-            );;
+            );
             $entry->categories()->sync($categories);
         } else {
             $entry = product::create($data);

@@ -45,6 +45,7 @@ return array(
     'App\\Models\\FavoriteProductCollection' => $baseDir . '/app/Models/FavoriteProductCollection.php',
     'App\\Models\\Order' => $baseDir . '/app/Models/Order.php',
     'App\\Models\\ProductDetail' => $baseDir . '/app/Models/ProductDetail.php',
+    'App\\Models\\ProductEvaluation' => $baseDir . '/app/Models/ProductEvaluation.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\UserDetail' => $baseDir . '/app/Models/UserDetail.php',
     'App\\Models\\category' => $baseDir . '/app/Models/category.php',
