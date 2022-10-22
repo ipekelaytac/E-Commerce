@@ -57,7 +57,7 @@ class OrderController extends Controller
             ->count();
         if ($controll > 0) {
             ProductEvaluation::where([
-                ['user_id', '=', request('user_id')],
+                ['user_id', '=', auth()->id(),],
                 ['order_id', '=', request('order_id')],
                 ['product_id', '=', request('product_id')],
 
@@ -65,7 +65,7 @@ class OrderController extends Controller
                 ->update([
                     'point' => request('point'),
                     'comment' => request('comment'),
-                    'user_id' => request('user_id'),
+                    'user_id' => auth()->id(),
                     'product_id' => request('product_id'),
                     'order_id' => request('order_id'),
                 ]);
@@ -74,14 +74,14 @@ class OrderController extends Controller
             ProductEvaluation::create([
                 'point' => request('point'),
                 'comment' => request('comment'),
-                'user_id' => request('user_id'),
+                'user_id' => auth()->id(),
                 'product_id' => request('product_id'),
                 'order_id' => request('order_id'),
             ]);
         }
 
         $image = ProductEvaluation::where([
-            ['user_id','=',request('user_id')],
+            ['user_id','=',auth()->id(),],
             ['order_id','=',request('order_id')],
             ['product_id','=',request('product_id')],])
             ->firstOrFail();
@@ -98,6 +98,7 @@ class OrderController extends Controller
 
                 $comment_image->move('uploads/comments', $filename);
                 $image->updateOrCreate(
+                    ['id' => $image->id],
                     ['comment_image' => $filename],
                 );
             }

@@ -115,7 +115,9 @@
                             <div role="tabpanel" class="tab-pane active" id="t2">kullanıcı adı:{{ $comment->name_surname }}</div>
                             <div role="tabpanel" class="tab-pane active" id="t2">yorum:{{ $comment->comment }}</div>
                             <div role="tabpanel" class="tab-pane active" id="t2">puan:{{ $comment->point }}</div>
-                            <div role="tabpanel" class="tab-pane active" id="t2">resim:{{ $comment->comment_image }}</div>
+                            <div role="tabpanel" class="tab-pane active" id="t2">resim:
+                                <img src="/uploads/comments/{{ $comment->comment_image }}">
+                            </div>
                             <div role="tabpanel" class="tab-pane active" id="t2">yorum tarihi:{{ $comment->updated_at }}</div>
                             <hr>
                         @endforeach
