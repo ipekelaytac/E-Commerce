@@ -13,7 +13,6 @@ use App\Http\Controllers\Management\ManagementIndexController;
 use App\Http\Controllers\Management\ManagementCategoryController;
 use App\Http\Controllers\Management\ManagementProductController;
 use App\Http\Controllers\Management\ManagementOrderController;
-use Illuminate\Http\Request;
 use Illuminate\Http\Redirect;
 
 Route::group(['prefix' => 'yonetim', 'namespace' => 'Management'], function () {
@@ -77,6 +76,7 @@ Route::group(['prefix' => 'sepet'], function () {
     Route::delete('/bosalt', [CartController::class, 'unload'])->name('cart.unload');
     Route::patch('/guncelle/{rowid}', [CartController::class, 'update'])->name('cart.update');
 });
+Route::group(['middleware' => 'auth'], function () {
 Route::group(['prefix' => 'favoriurunler'], function () {
     Route::get('/', [FavoriteProductsController::class, 'index'])->name('favorite_products');
     Route::post('/ekle', [FavoriteProductsController::class, 'add'])->name('favorite_products.add');
@@ -87,6 +87,8 @@ Route::group(['prefix' => 'favoriurunler'], function () {
     Route::get('/koleksiyon/kaldir/{id}', [FavoriteProductsController::class, 'collection_delete'])->name('collection_delete');
     Route::post('/kolleksiyonaekle', [FavoriteProductsController::class, 'collection_product_add'])->name('collection_product_add');
 });
+});
+
 
 Route::get('/odeme', [paymentController::class, 'index'])->name('payment');
 Route::post('/odeme', [paymentController::class, 'pay'])->name('pay');
@@ -105,11 +107,17 @@ Route::group(['prefix' => 'kullanici'], function () {
     Route::post('/kaydol', [UserController::class, 'register']);
     Route::get('/aktiflestir/{key}', [UserController::class, 'activate'])->name('activate');
     Route::post('/oturumukapat', [UserController::class, 'logout'])->name('user.logout');
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/bilgilerim', [UserController::class, 'information'])->name('user.information');
+        Route::post('/bilgilerim', [UserController::class, 'information_update'])->name('user.information_update');
+    });
+
 });
 Route::get('test/mail', function () {
     return new App\Mail\UserRecordMail();
 });
+Route::get('/oturumac', [UserController::class, 'login_form'])->name('login');
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

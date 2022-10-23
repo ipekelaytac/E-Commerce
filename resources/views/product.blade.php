@@ -16,7 +16,8 @@
         <div class="bg-content">
             <div class="row">
                 <div class="col-md-5">
-                    <img  class="img-responsive" src="{{ $product->detail->product_image!=null ? asset('uploads/products/' . $product->detail->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}">
+                    <img class="img-responsive"
+                         src="{{ $product->detail->product_image!=null ? asset('uploads/products/' . $product->detail->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}">
                     <hr>
                     <div class="row">
                         <div class="col-xs-3">
@@ -45,52 +46,55 @@
                         </form>
                     @endif
                     @if($product->stock > 0)
-                    <form action="{{route('cart.add')}}" method="post">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="id" value="{{ $product->id }}">
-                        <input type="submit" class="btn btn-theme" value="Sepete Ekle">
-                    </form>
-                        @endif
+                        <form action="{{route('cart.add')}}" method="post">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="id" value="{{ $product->id }}">
+                            <input type="submit" class="btn btn-theme" value="Sepete Ekle">
+                        </form>
+                    @endif
                     @auth()
-                    <form action="{{route('favorite_products.add')}}" method="post">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="id" value="{{ $product->id }}">
-                        <input type="submit" class="btn btn-theme" value="fav Ekle">
-                    </form>
+                        <form action="{{route('favorite_products.add')}}" method="post">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="id" value="{{ $product->id }}">
+                            <input type="submit" class="btn btn-theme" value="fav Ekle">
+                        </form>
 
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        Koleksiyona Ekle
-                    </button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Koleksiyona Ekle
+                        </button>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Koleksiyionlar</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                @foreach($favorite_collections as $collection)
-                                        <form action="{{route('collection_product_add')}}" method="post">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="product_id" value="{{ $product->id}}">
-                                            <input type="hidden" name="collection_id" value="{{ $collection->id }}">
-                                            <input type="submit" class="btn btn-theme" value="{{ $collection->collection_name }}">
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Koleksiyionlar</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @foreach($favorite_collections as $collection)
+                                            <form action="{{route('collection_product_add')}}" method="post">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="product_id" value="{{ $product->id}}">
+                                                <input type="hidden" name="collection_id" value="{{ $collection->id }}">
+                                                <input type="submit" class="btn btn-theme"
+                                                       value="{{ $collection->collection_name }}">
 
-                                    </form>
-                                    @endforeach
-                                </div>
+                                            </form>
+                                        @endforeach
+                                    </div>
 
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     @endauth
                 </div>
             </div>
@@ -112,15 +116,17 @@
                     @endif
                     @foreach($comments as $comment )
                         <hr>
-                            <div role="tabpanel" class="tab-pane active" id="t2">kullanıcı adı:{{ $comment->name_surname }}</div>
-                            <div role="tabpanel" class="tab-pane active" id="t2">yorum:{{ $comment->comment }}</div>
-                            <div role="tabpanel" class="tab-pane active" id="t2">puan:{{ $comment->point }}</div>
-                            <div role="tabpanel" class="tab-pane active" id="t2">resim:
-                                <img src="/uploads/comments/{{ $comment->comment_image }}">
-                            </div>
-                            <div role="tabpanel" class="tab-pane active" id="t2">yorum tarihi:{{ $comment->updated_at }}</div>
-                            <hr>
-                        @endforeach
+                        <div role="tabpanel" class="tab-pane active" id="t2">kullanıcı
+                            adı:{{ $comment->name_surname }}</div>
+                        <div role="tabpanel" class="tab-pane active" id="t2">yorum:{{ $comment->comment }}</div>
+                        <div role="tabpanel" class="tab-pane active" id="t2">puan:{{ $comment->point }}</div>
+                        <div role="tabpanel" class="tab-pane active" id="t2">resim:
+                            <img src="/uploads/comments/{{ $comment->comment_image }}">
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="t2">yorum
+                            tarihi:{{ $comment->updated_at }}</div>
+                        <hr>
+                    @endforeach
                 </div>
             </div>
 

@@ -7,19 +7,19 @@
             @if ($topcategories != null)
                 <li>
                     <a href="{{ route('categories', $topcategories->slug) }}">
-                    {{ $topcategories->category_name }}</a>
+                        {{ $topcategories->category_name }}</a>
                 </li>
                 <li><a href="">{{ $categories->category_name }}</a></li>
 
             @else
-            <li><a href="">{{ $categories->category_name }}</a></li>
+                <li><a href="">{{ $categories->category_name }}</a></li>
             @endif
         </ol>
         <div class="row">
             <div class="col-md-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">{{ $categories->category_name }}</div>
-                        <div class="panel-body">
+                    <div class="panel-body">
                         Toplam {{ $categories->products->count() }} ürün var.
                         @if (count($botcategories)>0)
                             <h3>Alt Kategoriler</h3>
@@ -40,7 +40,7 @@
                             @endif
                             {{ $categories->category_name }} kategorisinde başka alt kategori bulunmuyor.
                         @endif
-                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-9">
@@ -60,20 +60,21 @@
                         @foreach($products as $product)
                             <div class="col-md-3 product">
                                 <a href="{{ route('products', $product->slug) }}"><img
-                                        class="img-responsive" src="{{ $product->detail->product_image!=null ? asset('uploads/products/' . $product->detail->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}"></a>
+                                        class="img-responsive"
+                                        src="{{ $product->detail->product_image!=null ? asset('uploads/products/' . $product->detail->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}"></a>
                                 <p><a href="{{ route('products', $product->slug) }}">{{$product->product_name}}</a></p>
                                 <p class="price">{{$product->price, 2}}</p>
-{{--                                     @if($product->stock < 10 && $product->stock < 0)--}}
-{{--                                        <p> Stokta son {{$product->stock}} ürün var.</p>--}}
-{{--                                    @endif--}}
-{{--                                @if($product->stock == 0)--}}
-{{--                                    <p> Stokta ürün yok!</p>--}}
-{{--                                @endif--}}
-{{--                                <form action="{{route('cart.add')}}" method="post">--}}
-{{--                                    {{ csrf_field() }}--}}
-{{--                                    <input type="hidden" name="id" value="{{ $product->id }}">--}}
-{{--                                    <input type="submit" class="btn btn-theme" value="Sepete Ekle">--}}
-{{--                                </form>--}}
+                                {{--                                     @if($product->stock < 10 && $product->stock < 0)--}}
+                                {{--                                        <p> Stokta son {{$product->stock}} ürün var.</p>--}}
+                                {{--                                    @endif--}}
+                                {{--                                @if($product->stock == 0)--}}
+                                {{--                                    <p> Stokta ürün yok!</p>--}}
+                                {{--                                @endif--}}
+                                {{--                                <form action="{{route('cart.add')}}" method="post">--}}
+                                {{--                                    {{ csrf_field() }}--}}
+                                {{--                                    <input type="hidden" name="id" value="{{ $product->id }}">--}}
+                                {{--                                    <input type="submit" class="btn btn-theme" value="Sepete Ekle">--}}
+                                {{--                                </form>--}}
                             </div>
                         @endforeach
 

@@ -74,7 +74,7 @@ class ManagementIndexController extends Controller
             ->orderBy(DB::raw('SUM(cart_product.number)'), 'desc')
             ->get();
 
-        $color =['grey','black','yellow','pink','red','green','black','yellow','pink','red','green','black','yellow','pink','red','green'];
+        $color = ['grey', 'black', 'yellow', 'pink', 'red', 'green', 'black', 'yellow', 'pink', 'red', 'green', 'black', 'yellow', 'pink', 'red', 'green'];
         $color_int = 0;
 
         foreach ($best_selling_category as $category) {
@@ -84,11 +84,10 @@ class ManagementIndexController extends Controller
             ];
         }
         $best_selling_categories = collect($best_selling_categories);
-$best_selling_categories = $best_selling_categories->groupBy('category_name');
-$best_selling_categories = $best_selling_categories->map(function ($categoryGroup){
-    return collect($categoryGroup)->sum('number');
-});
-
+        $best_selling_categories = $best_selling_categories->groupBy('category_name');
+        $best_selling_categories = $best_selling_categories->map(function ($categoryGroup) {
+            return collect($categoryGroup)->sum('number');
+        });
 
 
         $highest_orders = Order::orderByDesc('order_price')
@@ -96,34 +95,34 @@ $best_selling_categories = $best_selling_categories->map(function ($categoryGrou
             ->get();
 
 
-        $orders= Order::with('MainCart.user')
+        $orders = Order::with('MainCart.user')
             ->orderByDesc('id')
             ->take(5)
             ->get();
 
-        $year_sales =array();
+        $year_sales = array();
         $month = 1;
-        $interval = 0 ;
-        while($month < 13 ){
-            for($month_edit = 0; $month_edit < $month; $month_edit++){
-                $first_date = new \DateTime('NOW '.'-'.$month_edit  .'month');
+        $interval = 0;
+        while ($month < 13) {
+            for ($month_edit = 0; $month_edit < $month; $month_edit++) {
+                $first_date = new \DateTime('NOW ' . '-' . $month_edit . 'month');
                 $first_formatted_date = $first_date->format('Y-m-d H:i:s');
             }
             $interval = $interval + 2;
-            $last_date = new \DateTime('NOW '.'-'.$month  .'month');
+            $last_date = new \DateTime('NOW ' . '-' . $month . 'month');
             $last_formatted_date = $last_date->format('Y-m-d H:i:s');
             $month_sales = Order::where([
-                ['created_at','<=',$first_formatted_date],
-                ['created_at','>=',$last_formatted_date],
-                ])
+                ['created_at', '<=', $first_formatted_date],
+                ['created_at', '>=', $last_formatted_date],
+            ])
                 ->sum('order_price');
             $str = (string)$month_sales;
             $year_sales[$interval] = $str;
-                    $month++;
+            $month++;
         }
 
 
-        return view('/management/index', compact('color','color_int','year_sales' ,'total_order','best_selling_categories','best_selling_products_category','highest_orders','all_sales','day_sales','day_sales_product','orders','pending_order', 'completed_order', 'total_product', 'total_category', 'total_user','best_selling_products'));
+        return view('/management/index', compact('color', 'color_int', 'year_sales', 'total_order', 'best_selling_categories', 'best_selling_products_category', 'highest_orders', 'all_sales', 'day_sales', 'day_sales_product', 'orders', 'pending_order', 'completed_order', 'total_product', 'total_category', 'total_user', 'best_selling_products'));
     }
 }
 

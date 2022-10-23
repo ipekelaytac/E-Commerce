@@ -17,19 +17,20 @@
                         <tr>
                             <td>
                                 <a href="{{ route('products',Str::slug($productCartItem->name)) }}">
-                                    <img  class="img-responsive" src="{{ $productCartItem->options->product_image!=null ? asset('uploads/products/' . $productCartItem->options->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}">
+                                    <img class="img-responsive"
+                                         src="{{ $productCartItem->options->product_image!=null ? asset('uploads/products/' . $productCartItem->options->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}">
                                 </a>
                             </td>
                             <td>
                                 <a href="{{ route('products',Str::slug($productCartItem->name)) }}">
-                                   <p> {{ $productCartItem->name }}
-                                   </p>
+                                    <p> {{ $productCartItem->name }}
+                                    </p>
                                     <form action="{{ route('cart.delete',$productCartItem->rowId) }}" method="post">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <input type="submit" class="btn btn-danger btn-xs" value="Sepetten kaldır">
                                     </form>
-                                    </a>
+                                </a>
                             </td>
                             <td>{{$productCartItem->price}} ₺</td>
 
@@ -58,7 +59,6 @@
                     <tr>
 
 
-
                     </tr>
                 </table>
                 <form action="{{ route('cart.unload',$productCartItem->rowId) }}" method="post">
@@ -69,14 +69,14 @@
                 @foreach(Cart::content() as $productCartItem)
                     @if($productCartItem->options->stock < $productCartItem->qty)
                         @if($stock_error > 0 )
-                        {{ $productCartItem->name }},
+                            {{ $productCartItem->name }},
                         @endif
                     @endif
                 @endforeach
 
                 @if($stock_error > 0)
-                    <p>   Stok Sorunu!</p>
-                    <input type="submit" class="btn btn-success pull-right btn-lg" value="Ödeme Yap"disabled>
+                    <p> Stok Sorunu!</p>
+                    <input type="submit" class="btn btn-success pull-right btn-lg" value="Ödeme Yap" disabled>
 
                 @else
                     <a href="{{route('payment')}}" class="btn btn-success pull-right btn-lg">Ödeme Yap</a>

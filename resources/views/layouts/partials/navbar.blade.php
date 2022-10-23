@@ -39,6 +39,8 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('orders') }}">Siparişlerim</a></li>
                         <li role="separator" class="divider"></li>
+                        <li><a href="{{ route('user.information') }}">Kullanıcı Bilgilerim</a></li>
+                        <li role="separator" class="divider"></li>
                         <li><a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Çıkış</a>
                         <form id="logout-form" action="{{ route('user.logout') }}" method="post"  style="display: none;" >
                             {{ csrf_field() }}

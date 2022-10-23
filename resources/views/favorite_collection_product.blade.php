@@ -4,7 +4,8 @@
     <div class="container">
         <div class="bg-content">
             <h2>Koleksiyonum {{ $favorite_collection->slug }}</h2>
-            <a href="{{ route('collection')}}"><option value="">Koleksiyonum</option>
+            <a href="{{ route('collection')}}">
+                <option value="">Koleksiyonum</option>
             </a>
             @include('layouts.partials.alert')
             <table class="table table-bordererd table-hover">
@@ -17,14 +18,16 @@
                         <tr>
                             <td>
                                 <a href="{{ route('products', $favorite_product->product->slug) }}">
-                                    <img  class="img-responsive" src="{{ $favorite_product->product->detail->product_image!=null ? asset('uploads/products/' . $favorite_product->product->detail->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}">
+                                    <img class="img-responsive"
+                                         src="{{ $favorite_product->product->detail->product_image!=null ? asset('uploads/products/' . $favorite_product->product->detail->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}">
                                 </a>
                             </td>
                             <td>
                                 <a href="{{ route('products', $favorite_product->product->slug) }}">
                                     <p>{{ $favorite_product->product->product_name }}
                                     </p>
-                                    <a href="{{ route('favorite_products.delete',$favorite_product->id ) }}"><input  type="submit" class="btn btn-danger btn-xs" value="Favorilerden kaldır"></a>
+                                    <a href="{{ route('favorite_products.delete',$favorite_product->id ) }}"><input
+                                            type="submit" class="btn btn-danger btn-xs" value="Favorilerden kaldır"></a>
                                 </a>
                             </td>
                             <td>

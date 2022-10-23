@@ -121,4 +121,35 @@ class UserController extends Controller
         \request()->session()->regenerate();
         return redirect()->route('index');
     }
+
+    public function information(){
+        $user = User::with('detail')->find(auth()->id());
+
+        return view('user.user_information',compact('user'));
+    }
+
+
+    public function information_update(){
+        $user = User::with('detail')->find(auth()->id());
+
+        User::where('id',auth()->id())->update([
+            'name_surname' => request('name_surname'),
+            'email' => $user->email,
+            'password' => $user->password,
+        ]);
+        UserDetail::updateOrCreate(
+            ['user_id' => auth()->id()],
+            [
+                'address' => request('address'),
+                'phone' => request('phone'),
+                'mobile_phone' => request('mobile_phone')
+            ]
+        );
+
+        return redirect()
+            ->route('user.information')
+            ->with('message', 'Bilgiler güncellendi.')
+            ->with('message_type', 'success');
+    }
+
 }
