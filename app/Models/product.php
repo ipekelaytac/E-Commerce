@@ -17,6 +17,10 @@ class product extends Model
     {
         return $this->belongsToMany('App\Models\category','category_product');
     }
+    public function brand()
+    {
+        return $this->belongsToMany('App\Models\brand','brand_product');
+    }
     public function detail()
     {
         return $this->hasOne('App\Models\ProductDetail')->withDefault();

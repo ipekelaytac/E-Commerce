@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\FavoriteProduct;
 use App\Models\FavoriteProductCollection;
 use App\Models\ProductEvaluation;
@@ -28,7 +29,8 @@ class ProductController extends Controller
             ->where('product_id', $product->id)
             ->avg('point');
         $point = (int)$points;
-        return view('product',compact('product','categories','favorite_collections','comments','point'));
+        $brand =  $product->brand()->distinct()->firstOrFail();
+        return view('product',compact('product','categories','favorite_collections','comments','point','brand'));
     }
     public function search()
     {

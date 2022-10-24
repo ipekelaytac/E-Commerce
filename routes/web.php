@@ -13,6 +13,7 @@ use App\Http\Controllers\Management\ManagementIndexController;
 use App\Http\Controllers\Management\ManagementCategoryController;
 use App\Http\Controllers\Management\ManagementProductController;
 use App\Http\Controllers\Management\ManagementOrderController;
+use App\Http\Controllers\Management\ManagementBrandController;
 use Illuminate\Http\Redirect;
 
 Route::group(['prefix' => 'yonetim', 'namespace' => 'Management'], function () {
@@ -58,6 +59,15 @@ Route::group(['prefix' => 'yonetim', 'namespace' => 'Management'], function () {
         Route::get('/kaydet/{id?}', [ManagementProductController::class, 'form'])->name('management.product.update');
         Route::post('/kaydet/{id?}', [ManagementProductController::class, 'save'])->name('management.product.save');
         Route::get('/sil/{id}', [ManagementProductController::class, 'delete'])->name('management.product.delete');
+    });
+
+    Route::group(['prefix' => 'markalar'], function () {
+        Route::match(['get', 'post'], '/', [ManagementBrandController::class, 'index'])->name('management.brand');
+        Route::get('/ekle', [ManagementBrandController::class, 'form'])->name('management.brand.add');
+        Route::get('/duzenle', [ManagementBrandController::class, 'form'])->name('management.brand.update');
+        Route::get('/kaydet/{id?}', [ManagementBrandController::class, 'form'])->name('management.brand.update');
+        Route::post('/kaydet/{id?}', [ManagementBrandController::class, 'save'])->name('management.brand.save');
+        Route::get('/sil/{id}', [ManagementBrandController::class, 'delete'])->name('management.brand.delete');
     });
 });
 });

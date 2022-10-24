@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\category;
 use App\Models\product;
 use App\Models\ProductDetail;
@@ -24,14 +25,17 @@ class ManagementProductController extends Controller
     {
         $entry = new product;
         $product_category = [];
+        $product_brand = [];
         if ($id > 0) {
             $entry = product::find($id);
             $product_category = $entry->categories()->pluck('category_id')->all();
+            $product_brand= $entry->brand()->pluck('brand_id')->all();
         }
 
         $categories = category::all();
+        $brands = Brand::all();
 
-        return view('/management/product/form', compact('entry', 'categories', 'product_category'));
+        return view('/management/product/form', compact('entry', 'categories', 'product_category','brands','product_brand'));
     }
 
     public function save($id = 0)
@@ -55,8 +59,8 @@ class ManagementProductController extends Controller
         $show_featured =\request('show_featured');
         $show_lots_selling =\request('show_lots_selling');
         $show_discount =\request('show_discount');
-
         $categories = request('categories');
+        $brand = \request('brand');
         if ($id > 0) {
             $entry = product::where('id', $id)->firstOrFail();
             $entry->update($data);
@@ -67,13 +71,16 @@ class ManagementProductController extends Controller
                     'show_discount' => $show_discount]
             );
             $entry->categories()->sync($categories);
-        } else {
+            $entry->brand()->sync($brand);
+            }
+            else {
             $entry = product::create($data);
             $entry->detail()->updateOrCreate( ['product_id' => $entry->id],
                 ['show_slider' => $show_slider,'show_opportunity_of_the_day' => $show_opportunity_of_the_day,
                     'show_featured' => $show_featured,'show_lots_selling' => $show_lots_selling,
                     'show_discount' => $show_discount]);
             $entry->categories()->attach($categories);
+                    $entry->brand()->attach($brand);
         }
 
 
@@ -108,8 +115,8 @@ class ManagementProductController extends Controller
         File::delete('uploads/products/' . $product->detail->product_image);
 
         $product->categories()->detach();
-//        $product->detail()->delete();
-
+        $product->brand()->detach();
+        $product->detail()->delete();
         $product->delete();
 
         return redirect()

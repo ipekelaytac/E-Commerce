@@ -18,7 +18,6 @@ return array(
     'App\\Http\\Controllers\\CategoryController' => $baseDir . '/app/Http/Controllers/CategoryController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\FavoriteProductsController' => $baseDir . '/app/Http/Controllers/FavoriteProductsController.php',
-    'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\IndexController' => $baseDir . '/app/Http/Controllers/IndexController.php',
     'App\\Http\\Controllers\\Management\\ManagementCategoryController' => $baseDir . '/app/Http/Controllers/Management/ManagementCategoryController.php',
     'App\\Http\\Controllers\\Management\\ManagementIndexController' => $baseDir . '/app/Http/Controllers/Management/ManagementIndexController.php',

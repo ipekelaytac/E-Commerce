@@ -533,7 +533,6 @@ class ComposerStaticInit6fc85fd1b8626d51b29de38be6af23e7
         'App\\Http\\Controllers\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/CategoryController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\FavoriteProductsController' => __DIR__ . '/../..' . '/app/Http/Controllers/FavoriteProductsController.php',
-        'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\IndexController' => __DIR__ . '/../..' . '/app/Http/Controllers/IndexController.php',
         'App\\Http\\Controllers\\Management\\ManagementCategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Management/ManagementCategoryController.php',
         'App\\Http\\Controllers\\Management\\ManagementIndexController' => __DIR__ . '/../..' . '/app/Http/Controllers/Management/ManagementIndexController.php',

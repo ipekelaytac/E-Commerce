@@ -51,6 +51,20 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <label class="col-sm-4 form-control-label"><span class="tx-danger">*</span>Marka</label>
+                                    <div class="col-sm-8 mg-t-10 mg-sm-t-0">
+                                        <select class="form-control form-control-sm" id="brand" name="brand">
+                                            <option value="">Seçiniz</option>
+                                        @foreach($brands as $brand)
+                                                <option
+                                                    value="{{ $brand->id }}" {{ collect(old('brand', $product_brand))->contains($brand->id) ? 'selected' : '' }}>
+                                                    {{ $brand->brand_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="row mg-t-10">
                                     <label class="col-sm-4 form-control-label"><span class="tx-danger">*</span> Ürün
                                         ismi</label>
