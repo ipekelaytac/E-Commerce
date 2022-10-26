@@ -29,8 +29,9 @@ class ProductController extends Controller
             ->where('product_id', $product->id)
             ->avg('point');
         $point = (int)$points;
-        $brand =  $product->brand()->distinct()->firstOrFail();
-        return view('product',compact('product','categories','favorite_collections','comments','point','brand'));
+        $brands =  $product->brand()->distinct()->get();
+
+        return view('product',compact('product','categories','favorite_collections','comments','point','brands'));
     }
     public function search()
     {

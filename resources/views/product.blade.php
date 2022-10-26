@@ -96,11 +96,13 @@
                             </div>
                         </div>
                     @endauth
-                    <hr>
-                    <p>Ürün Markası:</p>
+                    @foreach($brands as $brand)
+                        <hr>
+                        <p>Ürün Markası:</p>
                         <p>{{ $brand->brand_name }}</p>
                         <img class="img-responsive"
                              src="{{ $brand->brand_image!=null ? asset('uploads/brands/' . $brand->brand_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}">
+                    @endforeach
                 </div>
             </div>
             <div>
