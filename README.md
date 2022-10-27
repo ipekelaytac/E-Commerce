@@ -1,2 +1,2 @@
 # E-Commerce
- E-Ticaret
+ E-Ticaret Geliştirilmekte.
