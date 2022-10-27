@@ -56,4 +56,32 @@ public function form($id = 0)
             ->with('message', 'Kayıt silindi')
             ->with('message_type', 'success');
     }
+
+    public function trash()
+    {
+        $list = Order::onlyTrashed()->get();
+        return view('/management/order/trash', compact('list'));
+
+    }
+    public function trash_restore($id)
+    {
+        Order::where('id',$id)->restore();
+
+
+        return redirect()
+            ->route('management.order.trash')
+            ->with('message', 'Sipariş Geri Yüklendi')
+            ->with('message_type', 'success');
+    }
+    public function trash_remove($id)
+    {
+
+        Order::where('id', $id)->forceDelete();
+
+        return redirect()
+            ->route('management.order.trash')
+            ->with('message', 'Sipariş Kaldırıldı')
+            ->with('message_type', 'success');
+
+    }
 }

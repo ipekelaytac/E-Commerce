@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory,SoftDeletes;
 
     protected $table = "order";
     protected $fillable = ['main_cart_id','order_price','situation','name_surname','address','phone','mobile_phone','bank','number_installments'];

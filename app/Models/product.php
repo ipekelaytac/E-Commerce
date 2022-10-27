@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class product extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
-
+    use HasFactory,SoftDeletes;
     protected $table = "products";
     protected  $guarded =[];
     const CREATED_AT = 'created_at';

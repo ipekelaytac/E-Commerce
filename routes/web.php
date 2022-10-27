@@ -50,6 +50,9 @@ Route::group(['prefix' => 'yonetim', 'namespace' => 'Management'], function () {
         Route::get('/kaydet/{id?}', [ManagementOrderController::class, 'form'])->name('management.order.update');
         Route::post('/kaydet/{id?}', [ManagementOrderController::class, 'save'])->name('management.order.save');
         Route::get('/sil/{id}', [ManagementOrderController::class, 'delete'])->name('management.order.delete');
+        Route::match(['get', 'post'], '/copkutusu', [ManagementOrderController::class, 'trash'])->name('management.order.trash');
+        Route::get('/geriyükle/{id}', [ManagementOrderController::class, 'trash_restore'])->name('management.order.restore');
+        Route::get('/kaldir/{id}', [ManagementOrderController::class, 'trash_remove'])->name('management.order.remove');
     });
 
     Route::group(['prefix' => 'urunler'], function () {
@@ -59,6 +62,9 @@ Route::group(['prefix' => 'yonetim', 'namespace' => 'Management'], function () {
         Route::get('/kaydet/{id?}', [ManagementProductController::class, 'form'])->name('management.product.update');
         Route::post('/kaydet/{id?}', [ManagementProductController::class, 'save'])->name('management.product.save');
         Route::get('/sil/{id}', [ManagementProductController::class, 'delete'])->name('management.product.delete');
+        Route::match(['get', 'post'], '/copkutusu', [ManagementProductController::class, 'trash'])->name('management.product.trash');
+        Route::get('/geriyükle/{id}', [ManagementProductController::class, 'trash_restore'])->name('management.product.restore');
+        Route::get('/kaldir/{id}', [ManagementProductController::class, 'trash_remove'])->name('management.product.remove');
     });
 
     Route::group(['prefix' => 'markalar'], function () {

@@ -112,15 +112,44 @@ class ManagementProductController extends Controller
     public function delete($id)
     {
         $product = product::find($id);
-//        File::delete('uploads/products/' . $product->detail->product_image);
+
         $product->categories()->detach();
         $product->brand()->detach();
-//        $product->detail()->delete();
         $product->delete();
 
         return redirect()
             ->route('management.product')
             ->with('message', 'Kayıt silindi')
             ->with('message_type', 'success');
+    }
+
+
+    public function trash()
+    {
+    $list = product::onlyTrashed()->get();
+                return view('/management/product/trash', compact('list'));
+
+    }
+    public function trash_restore($id)
+    {
+        product::where('id',$id)->restore();
+        return redirect()
+            ->route('management.product.trash')
+            ->with('message', 'Ürün Geri Yüklendi')
+            ->with('message_type', 'success');
+    }
+    public function trash_remove($id)
+    {
+        $detail = ProductDetail::where('product_id', $id)->firstOrFail();
+
+        File::delete('uploads/products/' . $detail->product_image);
+        $detail->delete();
+        product::where('id', $id)->forceDelete();
+
+        return redirect()
+            ->route('management.product.trash')
+            ->with('message', 'Ürün Kaldırıldı')
+            ->with('message_type', 'success');
+
     }
 }

@@ -86,6 +86,18 @@
                                 <span>Üye Yönetimi</span>
                             </a>
                         </li>
+                        <li class="">
+                            <a href="https://localhost/admin/">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                <span>Çöp Kutusu</span>
+                                <i class="accordion-icon fa fa-angle-left"></i>
+                            </a>
+                            <ul class="sub-menu" style="display: none;">
+                                <li class=""><a href="{{route('management.product.trash')}}">Ürünler Çöp Kutusu</a></li>
+                                <li class=""><a href="{{route('management.order.trash')}}">Siparişler Çöp Kutusu</a></li>
+                            </ul>
+                        </li>
+
                         <li class="mg-20-force menu-extras">Site Yönetimi</li>
                         <li class="">
                             <a href="https://localhost/admin/sayfa">
