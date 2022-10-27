@@ -112,11 +112,10 @@ class ManagementProductController extends Controller
     public function delete($id)
     {
         $product = product::find($id);
-        File::delete('uploads/products/' . $product->detail->product_image);
-
+//        File::delete('uploads/products/' . $product->detail->product_image);
         $product->categories()->detach();
         $product->brand()->detach();
-        $product->detail()->delete();
+//        $product->detail()->delete();
         $product->delete();
 
         return redirect()

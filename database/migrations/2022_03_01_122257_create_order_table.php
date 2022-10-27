@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
 
 class CreateOrderTable extends Migration
 {
@@ -24,7 +26,9 @@ class CreateOrderTable extends Migration
             $table->string('mobile_phone',15)->nullable();
             $table->string('bank',20)->nullable();
             $table->integer('number_installments');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('deleted_at')->nullable();
             $table->unique('main_cart_id');
             $table->foreign('main_cart_id')->references('id')->on('cart')->onDelete('cascade');
 
