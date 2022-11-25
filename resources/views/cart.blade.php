@@ -76,7 +76,7 @@
 
                 @if($stock_error > 0)
                     <p> Stok Sorunu!</p>
-                    <input type="submit" class="btn btn-success pull-right btn-lg" value="Ödeme Yap" disabled>
+                    <div  class="btn btn-success pull-right btn-lg">Ödeme Yap</div>
 
                 @else
                     <a href="{{route('payment')}}" class="btn btn-success pull-right btn-lg">Ödeme Yap</a>
