@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\CartProduct;
 use App\Models\category;
 use App\Models\product;
 use App\Models\ProductDetail;
@@ -63,6 +64,7 @@ class ManagementProductController extends Controller
         $brand = \request('brand');
         if ($id > 0) {
             $entry = product::where('id', $id)->firstOrFail();
+            $cart_products = CartProduct::where('product_id', $id)->get();
             $entry->update($data);
             $entry->detail()->updateOrCreate(
                 ['product_id' => $entry->id],
@@ -72,6 +74,13 @@ class ManagementProductController extends Controller
             );
             $entry->categories()->sync($categories);
             $entry->brand()->sync($brand);
+            foreach ($cart_products as $cart_product) {
+                if ($cart_product->price != $data['price']){
+                    CartProduct::where('id',$cart_product->id)->update([
+                        'price' => $data['price'],
+                    ]);
+                }
+            }
             }
             else {
             $entry = product::create($data);
