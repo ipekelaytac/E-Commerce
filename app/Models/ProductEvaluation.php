@@ -19,7 +19,7 @@ class ProductEvaluation extends Model
 
     public function product()
     {
-        return $this->belongsTo('App\Models\product','product_id');
+        return $this->belongsTo('App\Models\Product','product_id');
     }
     public function order()
     {

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
-use App\Models\category;
+use App\Models\Category;
 use App\Models\Order;
-use App\Models\product;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +18,8 @@ class ManagementIndexController extends Controller
     {
         $pending_order = Order::where('situation', 'Siparişiniz alındı')->count();
         $completed_order = Order::where('situation', 'Sipariş tamamlandı')->count();
-        $total_product = product::count();
-        $total_category = category::count();
+        $total_product = Product::count();
+        $total_category = Category::count();
         $total_user = User::count();
         $total_order = Order::count();
 

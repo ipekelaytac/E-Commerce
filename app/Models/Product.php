@@ -18,11 +18,11 @@ class product extends Model
 
     public function categories()
     {
-        return $this->belongsToMany('App\Models\category','category_product');
+        return $this->belongsToMany('App\Models\Category','category_product');
     }
     public function brand()
     {
-        return $this->belongsToMany('App\Models\brand','brand_product');
+        return $this->belongsToMany('App\Models\Brand','brand_product');
     }
     public function detail()
     {

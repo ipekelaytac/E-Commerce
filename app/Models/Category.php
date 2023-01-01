@@ -15,16 +15,16 @@ class category extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Models\product','category_product');
+        return $this->belongsToMany('App\Models\Product','category_product');
     }
 
     public function bot_categories()
     {
-        return $this->hasMany('App\Models\category', 'top_id', 'id');
+        return $this->hasMany('App\Models\Category', 'top_id', 'id');
     }
 
     public function top_category() {
-        return $this->belongsTo('App\Models\category', 'top_id')->withDefault([
+        return $this->belongsTo('App\Models\Category', 'top_id')->withDefault([
             'category_name' => 'Ana Kategori'
         ]);
     }

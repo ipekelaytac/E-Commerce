@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductDetail;
-use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Product;
-use App\Models\mainCart;
+use App\Models\MainCart;
 use App\Models\CartProduct;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class CartController extends Controller
 {
@@ -38,7 +34,7 @@ class CartController extends Controller
             $active_cart_id = session('active_cart_id');
             if (!isset($active_cart_id))
             {
-                $active_cart=mainCart::create([
+                $active_cart=Maincart::create([
                     'user_id' => auth()->id()
                 ]);
                 $active_cart_id=$active_cart->id;

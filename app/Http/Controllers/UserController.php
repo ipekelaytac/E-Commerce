@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\UserRecordMail;
 use App\Models\CartProduct;
-use App\Models\mainCart;
+use App\Models\MainCart;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserDetail;
@@ -37,10 +37,10 @@ class UserController extends Controller
         {
             \request()->session()->regenerate();
 
-            $active_cart_id = mainCart::active_cart_id();
+            $active_cart_id = Maincart::active_cart_id();
             if(is_null($active_cart_id))
             {
-                $active_cart = mainCart::create(['user_id'=>auth()->id()]);
+                $active_cart = Maincart::create(['user_id'=>auth()->id()]);
                 $active_cart_id = $active_cart->id;
             }
             session()->put('active_cart_id',$active_cart_id);

@@ -41,8 +41,8 @@ class AppServiceProvider extends ServiceProvider
 //                return [
 //                    'pending_order' => Order::where('situation', 'Siparişiniz alındı.')->count(),
 //                    'completed_order' => Order::where('situation', 'Tamamlanan sipariş.')->count(),
-//                    'total_product' => product::count(),
-//                    'total_category' => category::count(),
+//                    'total_product' => Product::count(),
+//                    'total_category' => Category::count(),
 //                    'total_user' => User::count()
 //                ];
 //            });

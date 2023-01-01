@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FavoriteProduct;
 use App\Models\FavoriteProductCollection;
-use App\Models\product;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isEmpty;
 use Illuminate\Support\Str;

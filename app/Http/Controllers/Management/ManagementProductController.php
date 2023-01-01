@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Management;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\CartProduct;
-use App\Models\category;
-use App\Models\product;
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -17,7 +17,7 @@ class ManagementProductController extends Controller
 
     public function index()
     {
-            $list = product::orderByDesc('id')->get();
+            $list = Product::orderByDesc('id')->get();
 
         return view('/management/product/products', compact('list'));
     }
@@ -28,12 +28,12 @@ class ManagementProductController extends Controller
         $product_category = [];
         $product_brand = [];
         if ($id > 0) {
-            $entry = product::find($id);
+            $entry = Product::find($id);
             $product_category = $entry->categories()->pluck('category_id')->all();
             $product_brand= $entry->brand()->pluck('brand_id')->all();
         }
 
-        $categories = category::all();
+        $categories = Category::all();
         $brands = Brand::all();
 
         return view('/management/product/form', compact('entry', 'categories', 'product_category','brands','product_brand'));
@@ -63,7 +63,7 @@ class ManagementProductController extends Controller
         $categories = request('categories');
         $brand = \request('brand');
         if ($id > 0) {
-            $entry = product::where('id', $id)->firstOrFail();
+            $entry = Product::where('id', $id)->firstOrFail();
             $cart_products = CartProduct::where('product_id', $id)->get();
             $entry->update($data);
             $entry->detail()->updateOrCreate(
@@ -83,7 +83,7 @@ class ManagementProductController extends Controller
             }
             }
             else {
-            $entry = product::create($data);
+            $entry = Product::create($data);
             $entry->detail()->updateOrCreate( ['product_id' => $entry->id],
                 ['show_slider' => $show_slider,'show_opportunity_of_the_day' => $show_opportunity_of_the_day,
                     'show_featured' => $show_featured,'show_lots_selling' => $show_lots_selling,
@@ -120,7 +120,7 @@ class ManagementProductController extends Controller
 
     public function delete($id)
     {
-        $product = product::find($id);
+        $product = Product::find($id);
 
         $product->categories()->detach();
         $product->brand()->detach();
@@ -135,13 +135,13 @@ class ManagementProductController extends Controller
 
     public function trash()
     {
-    $list = product::onlyTrashed()->get();
+    $list = Product::onlyTrashed()->get();
                 return view('/management/product/trash', compact('list'));
 
     }
     public function trash_restore($id)
     {
-        product::where('id',$id)->restore();
+        Product::where('id',$id)->restore();
         return redirect()
             ->route('management.product.trash')
             ->with('message', 'Ürün Geri Yüklendi')
@@ -153,7 +153,7 @@ class ManagementProductController extends Controller
 
         File::delete('uploads/products/' . $detail->product_image);
         $detail->delete();
-        product::where('id', $id)->forceDelete();
+        Product::where('id', $id)->forceDelete();
 
         return redirect()
             ->route('management.product.trash')

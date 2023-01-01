@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\category;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -11,7 +11,7 @@ class CategoryController extends Controller
     {
         $categories = Category::where('slug' ,$slug_categoryname)->firstOrFail();
         $botcategories = Category::where('top_id', $categories->id)->get();
-        $topcategories= category::find($categories->top_id);
+        $topcategories= Category::find($categories->top_id);
 
         $order = request('sırala');
         if ($order == 'coksatanlar') {

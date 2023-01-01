@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\product;
 use App\Models\ProductDetail;
 use Illuminate\Http\Request;
-use App\Models\category;
+use App\Models\Category;
 
 class IndexController extends Controller
 {
     public function index()
     {
-        $categories = category::whereRaw('top_id is null')->take(8)->get();
+        $categories = Category::whereRaw('top_id is null')->take(8)->get();
 
         $products_slider = ProductDetail::with('product')
             ->where('show_slider', 1)

@@ -18,7 +18,7 @@ class Order extends Model
     const DELETED_AT = 'deleted_at';
     public function MainCart()
     {
-        return $this->belongsTo('App\Models\mainCart');
+        return $this->belongsTo('App\Models\MainCart');
     }
 
 }
