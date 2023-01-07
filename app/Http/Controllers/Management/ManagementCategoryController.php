@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Management;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Customer\Controller;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ManagementCategoryController extends Controller

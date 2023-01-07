@@ -20,7 +20,7 @@ class FavoriteProduct extends Model
     }
     public function favorite_category()
 {
-    return $this->belongsToMany('App\Models\FavoriteProductCollection','favorite_product_collection_id');
+    return $this->belongsToMany('App\Models\Collection','collection_id');
 }
     public function product()
     {

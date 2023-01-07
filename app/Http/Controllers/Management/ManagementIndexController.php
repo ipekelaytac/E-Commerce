@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Management;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Customer\Controller;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use Illuminate\Support\Facades\Cache;
 
 class ManagementIndexController extends Controller
 {

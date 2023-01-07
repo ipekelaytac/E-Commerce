@@ -1,19 +1,19 @@
 <?php
 
-use App\Http\Controllers\IndexController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\FavoriteProductsController;
-use App\Http\Controllers\Management\ManagementUserController;
-use App\Http\Controllers\Management\ManagementIndexController;
-use App\Http\Controllers\Management\ManagementCategoryController;
-use App\Http\Controllers\Management\ManagementProductController;
-use App\Http\Controllers\Management\ManagementOrderController;
+use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\CategoryController;
+use App\Http\Controllers\Customer\FavoriteProductController;
+use App\Http\Controllers\Customer\IndexController;
+use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Customer\PaymentController;
+use App\Http\Controllers\Customer\ProductController;
+use App\Http\Controllers\Customer\UserController;
 use App\Http\Controllers\Management\ManagementBrandController;
+use App\Http\Controllers\Management\ManagementCategoryController;
+use App\Http\Controllers\Management\ManagementIndexController;
+use App\Http\Controllers\Management\ManagementOrderController;
+use App\Http\Controllers\Management\ManagementProductController;
+use App\Http\Controllers\Management\ManagementUserController;
 use Illuminate\Http\Redirect;
 
 Route::group(['prefix' => 'yonetim', 'namespace' => 'Management'], function () {
@@ -94,14 +94,14 @@ Route::group(['prefix' => 'sepet'], function () {
 });
 Route::group(['middleware' => 'auth'], function () {
 Route::group(['prefix' => 'favoriurunler'], function () {
-    Route::get('/', [FavoriteProductsController::class, 'index'])->name('favorite_products');
-    Route::post('/ekle', [FavoriteProductsController::class, 'add'])->name('favorite_products.add');
-    Route::get('/kaldir/{id}', [FavoriteProductsController::class, 'delete'])->name('favorite_products.delete');
-    Route::get('/koleksiyon', [FavoriteProductsController::class, 'collection'])->name('collection');
-    Route::get('/koleksiyon/{slug_collectionname}', [FavoriteProductsController::class, 'collection_product'])->name('collection_product');
-    Route::post('/koleksiyon/ekle', [FavoriteProductsController::class, 'collection_add'])->name('collection_add');
-    Route::get('/koleksiyon/kaldir/{id}', [FavoriteProductsController::class, 'collection_delete'])->name('collection_delete');
-    Route::post('/kolleksiyonaekle', [FavoriteProductsController::class, 'collection_product_add'])->name('collection_product_add');
+    Route::get('/', [FavoriteProductController::class, 'index'])->name('favorite_products');
+    Route::post('/ekle', [FavoriteProductController::class, 'add'])->name('favorite_products.add');
+    Route::get('/kaldir/{id}', [FavoriteProductController::class, 'delete'])->name('favorite_products.delete');
+    Route::get('/koleksiyon', [FavoriteProductController::class, 'collection'])->name('collection');
+    Route::get('/koleksiyon/{slug_collectionname}', [FavoriteProductController::class, 'collection_product'])->name('collection_product');
+    Route::post('/koleksiyon/ekle', [FavoriteProductController::class, 'collection_add'])->name('collection_add');
+    Route::get('/koleksiyon/kaldir/{id}', [FavoriteProductController::class, 'collection_delete'])->name('collection_delete');
+    Route::post('/kolleksiyonaekle', [FavoriteProductController::class, 'collection_product_add'])->name('collection_product_add');
 });
 });
 

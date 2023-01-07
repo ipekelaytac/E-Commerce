@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Management;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Customer\Controller;
 use App\Models\Brand;
 use App\Models\CartProduct;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductDetail;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 

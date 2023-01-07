@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Management;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Customer\Controller;
 use App\Models\Order;
-use Illuminate\Http\Request;
 
 class ManagementOrderController extends Controller
 {

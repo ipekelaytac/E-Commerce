@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="bbb714b6-f3ed-41c1-8c72-5c6337f94d68" name="ftp.aytacipekel.com" url="http://ftp.aytacipekel.com">
+        <fileTransfer rootFolder="/eticaret.aytacipekel.com" host="ftp.aytacipekel.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Management;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Customer\Controller;
 use App\Models\User;
 use App\Models\UserDetail;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 

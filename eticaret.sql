@@ -225,7 +225,7 @@ INSERT INTO `category_product` (`id`, `category_id`, `product_id`) VALUES
 CREATE TABLE `favorite_product` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `favorite_product_collection_id` int(10) UNSIGNED DEFAULT NULL,
+  `collection_id` int(10) UNSIGNED DEFAULT NULL,
   `product_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -235,7 +235,7 @@ CREATE TABLE `favorite_product` (
 -- Tablo döküm verisi `favorite_product`
 --
 
-INSERT INTO `favorite_product` (`id`, `user_id`, `favorite_product_collection_id`, `product_id`, `created_at`, `updated_at`) VALUES
+INSERT INTO `favorite_product` (`id`, `user_id`, `collection_id`, `product_id`, `created_at`, `updated_at`) VALUES
 (7, 17, NULL, 43, '2022-10-15 09:13:12', '2022-10-15 09:13:12'),
 (8, 17, NULL, 43, '2022-10-15 09:13:17', '2022-10-15 09:13:17');
 
@@ -612,7 +612,7 @@ ALTER TABLE `category_product`
 ALTER TABLE `favorite_product`
   ADD PRIMARY KEY (`id`),
   ADD KEY `favorite_product_user_id_foreign` (`user_id`),
-  ADD KEY `favorite_product_favorite_product_collection_id_foreign` (`favorite_product_collection_id`),
+  ADD KEY `favorite_product_collection_id_foreign` (`collection_id`),
   ADD KEY `favorite_product_product_id_foreign` (`product_id`);
 
 --
@@ -813,7 +813,7 @@ ALTER TABLE `category_product`
 -- Tablo kısıtlamaları `favorite_product`
 --
 ALTER TABLE `favorite_product`
-  ADD CONSTRAINT `favorite_product_favorite_product_collection_id_foreign` FOREIGN KEY (`favorite_product_collection_id`) REFERENCES `favorite_product_collection` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `favorite_product_collection_id_foreign` FOREIGN KEY (`collection_id`) REFERENCES `favorite_product_collection` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `favorite_product_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `favorite_product_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
