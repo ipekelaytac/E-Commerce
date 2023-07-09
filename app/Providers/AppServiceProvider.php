@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\category;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\product;
 use App\Models\Settings;
@@ -34,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
     {
 
         Schema::defaultStringLength(191);
+
+        $categories = Category::whereRaw('top_id is null')->take(8)->get();
+        View::share('categories', $categories);
 
 //
 //            $timeout = now()->addMinutes(10);
