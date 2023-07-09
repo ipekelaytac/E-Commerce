@@ -5,6 +5,7 @@
 
 @endsection
 @section('content')
+    @include('customer.layouts.partials.alert')
 
     <main>
         <div class="top_banner">

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Management;
 
-use App\Http\Controllers\Customer\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\CartProduct;
 use App\Models\Category;

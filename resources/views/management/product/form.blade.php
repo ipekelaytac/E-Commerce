@@ -8,8 +8,9 @@
 @endsection
 @section('content')
 
-    @include('layouts.partials.errors')
-    @include('layouts.partials.alert')
+    @include('management.layouts.partials.errors')
+    @include('management.layouts.partials.alert')
+
     <form action="{{ route('management.product.save', $entry->id) }}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="pageheader">

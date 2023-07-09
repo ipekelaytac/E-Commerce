@@ -5,10 +5,9 @@
 
 @endsection
 @section('content')
+    @include('customer.layouts.partials.alert')
 
     <main>
-
-
         <div class="container margin_60_35">
 
             <div class="row justify-content-center">

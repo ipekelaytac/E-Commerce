@@ -1,57 +1,53 @@
 @extends('customer.layouts.master')
-@section('title', '$product->product_name')
+@section('title', $product->product_name)
 @section('head')
     <link href="{{ asset('customer/css/product_page.css') }}" rel="stylesheet">
-
 @endsection
 @section('content')
+    @include('customer.layouts.partials.alert')
+    @include('customer.layouts.partials.errors')
 
     <main>
         <div class="container margin_30">
-            <div class="countdown_inner">-20% This offer ends in
-                <div data-countdown="2020/05/15" class="countdown"></div>
-            </div>
+{{--            <div class="countdown_inner">-20% This offer ends in--}}
+{{--                <div data-countdown="2020/05/15" class="countdown"></div>--}}
+{{--            </div>--}}
             <div class="row">
                 <div class="col-lg-6 magnific-gallery">
                     <p>
                         <a href="img/products/shoes/large/1.jpg" title="Photo title" data-effect="mfp-zoom-in"><img
-                                    src="img/products/shoes/large/1.jpg" alt="" class="img-fluid"></a>
-                    </p>
-                    <p>
-                        <a href="img/products/shoes/large/2.jpg" title="Photo title" data-effect="mfp-zoom-in"><img
-                                    src="img/products/product_placeholder_square_medium.jpg"
-                                    data-src="img/products/shoes/large/2.jpg" alt="" class="img-fluid lazy"></a>
-                    </p>
-                    <p>
-                        <a href="img/products/shoes/large/3.jpg" title="Photo title" data-effect="mfp-zoom-in"><img
-                                    src="img/products/product_placeholder_square_medium.jpg"
-                                    data-src="img/products/shoes/large/3.jpg" alt="" class="img-fluid lazy"></a>
-                    </p>
-                    <p>
-                        <a href="img/products/shoes/large/4.jpg" title="Photo title" data-effect="mfp-zoom-in"><img
-                                    src="img/products/product_placeholder_square_medium.jpg"
-                                    data-src="img/products/shoes/large/4.jpg" alt="" class="img-fluid lazy"></a>
+                                    src="{{ $product->detail->product_image!=null ? asset('uploads/products/' . $product->detail->product_image) : 'https://via.placeholder.com/500?text=UrunResmi' }}" alt="" class="img-fluid"></a>
                     </p>
                 </div>
                 <div class="col-lg-6" id="sidebar_fixed">
                     <div class="breadcrumbs">
                         <ul>
                             <li><a href="#">Anasayfa</a></li>
-                            <li><a href="#">Category</a></li>
-                            <li>Page active</li>
+                            <li>
+                                @foreach($categories as $category)
+                                <a class="and" href="{{ route('customer.categories', $category->slug) }}">{{ $category->category_name }}</a>
+                            @endforeach
+                            </li>
+                            <li>{{$product->product_name}}</li>
                         </ul>
                     </div>
                     <!-- /page_header -->
                     <div class="prod_info">
-                        <h1>Armor Air X Fear</h1>
-                        <span class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i><em>4 reviews</em></span>
-                        <p><small>SKU: MTKRY-001</small><br>Sed ex labitur adolescens scriptorem. Te saepe verear
-                            tibique sed. Et wisi ridens vix, lorem iudico blandit mel cu. Ex vel sint zril oportere,
-                            amet wisi aperiri te cum.</p>
-                        <p>Vix patrioque cotidieque ad, iusto probatus volutpat id pri. Amet dicam omnesque at est,
-                            voluptua assueverit ut has, modo hinc nec ea. Quas nulla labore est ne, est in quod solet
-                            labitur, sit ne probo mandamus.</p>
+                        <h1>{{$product->product_name}}</h1>
+                        <span class="rating">
+                            @for( $i=0; $i<$point; $i++)
+                                <i class="icon-star voted"></i>
+                            @endfor
+                                @for( $i=0; $i<5-$point; $i++)
+                                    <i class="icon-star "></i>
+                                @endfor
+                                @if(count($comments) == 0 )
+                                  <em>Değerlendirme Yok</em></span>
+                        @else
+                            <em>  {{ count($comments) }} Değerlendirme </em></span>
+
+                        @endif
+                        <p><small>Ürün Kodu: #{{$product->id}}</small><br>{!!      Str::limit($product->comment,250,'...')!!}
                         <div class="prod_options">
                             {{--                            <div class="row">--}}
                             {{--                                <label class="col-xl-5 col-lg-5  col-md-6 col-6 pt-0"><strong>Color</strong></label>--}}
@@ -77,6 +73,15 @@
                             {{--                                    </div>--}}
                             {{--                                </div>--}}
                             {{--                            </div>--}}
+                            <div class=" row col-5 offset-5">
+                                <p class="float-end">   @if($product->stock < 10 && $product->stock > 0)
+                                        Stokta son {{$product->stock}} ürün var.
+                                    @endif
+                                    @if($product->stock == 0)
+                                        Stokta ürün yok!
+                                    @endif
+                                </p>
+                            </div>
                             <div class="row">
                                 <label class="col-xl-5 col-lg-5  col-md-6 col-6"><strong>Adet</strong></label>
                                 <div class="col-xl-4 col-lg-5 col-md-6 col-6">
@@ -86,27 +91,52 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-lg-5 col-md-6">
-                                <div class="price_main"><span class="new_price">$148.00</span><span class="percentage">-20%</span>
-                                    <span class="old_price">$160.00</span></div>
+                                <div class="price_main"><span class="new_price">{{$product->price}}₺</span><span class="percentage">-20%</span>
+                                    <span class="old_price">{{$product->price}}₺</span></div>
                             </div>
                             <div class="col-lg-4 col-md-6">
-                                <div class="btn_add_to_cart"><a href="#0" class="btn_1">Sepete Ekle</a></div>
+
+                                    <form action="{{route('customer.cart.add')}}" method="post">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                        <div class="btn_add_to_cart"><button type="submit"  class="btn_1">Sepete Ekle</button></div>
+                                    </form>
                             </div>
                         </div>
                     </div>
+
+                    @auth()
+                        <div class="product_actions">
+                            <ul>
+                                <li>
+                                    <form id="fav" action="{{route('customer.favorite_products.add')}}" method="post">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                    <a onclick="document.getElementById('fav').submit();"><i class="ti-heart"></i><span>Favorilere Ekle</span></a>
+                                    </form>
+
+                                </li>
+                                <li>
+                                    <a onclick="showHide()"  ><i class="ti-bookmark"></i><span>Koleksiyona Ekle</span></a>
+                                    <div id="list"  style="display:none">
+                                        @foreach($favorite_collections as $collection)
+                                            <form action="{{route('customer.collection_product.add')}}" method="post">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="product_id" value="{{ $product->id}}">
+                                                <input type="hidden" name="collection_id" value="{{ $collection->id }}">
+                                                <input type="submit" class="btn btn-theme"
+                                                       value="{{ $collection->collection_name }}">
+                                            </form>
+                                        @endforeach
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    @endauth
                     <!-- /prod_info -->
-                    <div class="product_actions">
-                        <ul>
-                            <li>
-                                <a href="#"><i class="ti-heart"></i><span>Favorilere Ekle</span></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="ti-bookmark"></i><span>Koleksiyona Ekle</span></a>
-                            </li>
-                        </ul>
-                    </div>
                     <!-- /product_actions -->
                 </div>
             </div>
@@ -119,10 +149,10 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a id="tab-A" href="#pane-A" class="nav-link active" data-bs-toggle="tab"
-                           role="tab">Description</a>
+                           role="tab">Özellikler</a>
                     </li>
                     <li class="nav-item">
-                        <a id="tab-B" href="#pane-B" class="nav-link" data-bs-toggle="tab" role="tab">Reviews</a>
+                        <a id="tab-B" href="#pane-B" class="nav-link" data-bs-toggle="tab" role="tab">Değerlendirmeler</a>
                     </li>
                 </ul>
             </div>
@@ -136,7 +166,7 @@
                             <h5 class="mb-0">
                                 <a class="collapsed" data-bs-toggle="collapse" href="#collapse-A" aria-expanded="false"
                                    aria-controls="collapse-A">
-                                    Description
+                                    Özellikler
                                 </a>
                             </h5>
                         </div>
@@ -145,18 +175,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h3>Detay</h3>
-                                        <p>Lorem ipsum dolor sit amet, in eleifend <strong>inimicus elaboraret</strong>
-                                            his, harum efficiendi mel ne. Sale percipit vituperata ex mel, sea ne essent
-                                            aeterno sanctus, nam ea laoreet civibus electram. Ea vis eius explicari.
-                                            Quot iuvaret ad has.</p>
-                                        <p>Vis ei ipsum conclusionemque. Te enim suscipit recusabo mea, ne vis mazim
-                                            aliquando, everti insolens at sit. Cu vel modo unum quaestio, in vide dicta
-                                            has. Ut his laudem explicari adversarium, nisl <strong>laboramus
-                                                hendrerit</strong> te his, alia lobortis vis ea.</p>
-                                        <p>Perfecto eleifend sea no, cu audire voluptatibus eam. An alii praesent sit,
-                                            nobis numquam principes ea eos, cu autem constituto suscipiantur eam. Ex
-                                            graeci elaboraret pro. Mei te omnis tantas, nobis viderer vivendo ex
-                                            has.</p>
+                                        {!! $product->comment !!}
                                     </div>
                                     <div class="col-md-6">
                                         <h3>Özellikler</h3>
@@ -200,70 +219,39 @@
                         <div id="collapse-B" class="collapse" role="tabpanel" aria-labelledby="heading-B">
                             <div class="card-body">
                                 <div class="row justify-content-between">
+                                    @if(count($comments) == 0 )
+                                        <h4>Henüz yorum yapılmadı.</h4>
+                                    @endif
+                                    @foreach($comments as $comment )
                                     <div class="col-lg-6">
                                         <div class="review_content">
                                             <div class="clearfix add_bottom_10">
-                                                <span class="rating"><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i
-                                                            class="icon-star"></i><em>5.0/5.0</em></span>
-                                                <em>Published 54 minutes ago</em>
+                                                 <span class="rating">
+                                                 @for( $i=0; $i<$comment->point; $i++)
+                                                        <i class="icon-star"></i>
+                                                    @endfor
+                                                    @if($comment->point == 0 )
+                                                        <em>Değerlendirme Yok</em></span>
+
+                                                @endif
+
+
+
+                                                    <em>5/{{ $comment->point }}</em></span>
+                                                <em>{{ $comment->updated_at }}</em>
                                             </div>
-                                            <h4>"Commpletely satisfied"</h4>
-                                            <p>Eos tollit ancillae ea, lorem consulatu qui ne, eu eros eirmod scaevola
-                                                sea. Et nec tantas accusamus salutatus, sit commodo veritus te, erat
-                                                legere fabulas has ut. Rebum laudem cum ea, ius essent fuisset ut.
-                                                Viderer petentium cu his.</p>
+                                            <h4>{{ $comment->comment_title }}</h4>
+                                            <b>{{ $comment->name_surname }}</b>
+                                            <p>{{ $comment->comment }}</p>
+                                            <img
+                                                 src="{{ $comment->comment_image!=null ? asset('uploads/comments/' . $comment->comment_image) : 'customer/img/products/product_placeholder_square_medium.jpg' }}" alt="">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="review_content">
-                                            <div class="clearfix add_bottom_10">
-                                                <span class="rating"><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i class="icon-star"></i><i
-                                                            class="icon-star empty"></i><i
-                                                            class="icon-star empty"></i><em>4.0/5.0</em></span>
-                                                <em>Published 1 day ago</em>
-                                            </div>
-                                            <h4>"Always the best"</h4>
-                                            <p>Et nec tantas accusamus salutatus, sit commodo veritus te, erat legere
-                                                fabulas has ut. Rebum laudem cum ea, ius essent fuisset ut. Viderer
-                                                petentium cu his.</p>
-                                        </div>
-                                    </div>
+                                        @endforeach
+
+
                                 </div>
                                 <!-- /row -->
-                                <div class="row justify-content-between">
-                                    <div class="col-lg-6">
-                                        <div class="review_content">
-                                            <div class="clearfix add_bottom_10">
-                                                <span class="rating"><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i class="icon-star empty"></i><em>4.5/5.0</em></span>
-                                                <em>Published 3 days ago</em>
-                                            </div>
-                                            <h4>"Outstanding"</h4>
-                                            <p>Eos tollit ancillae ea, lorem consulatu qui ne, eu eros eirmod scaevola
-                                                sea. Et nec tantas accusamus salutatus, sit commodo veritus te, erat
-                                                legere fabulas has ut. Rebum laudem cum ea, ius essent fuisset ut.
-                                                Viderer petentium cu his.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="review_content">
-                                            <div class="clearfix add_bottom_10">
-                                                <span class="rating"><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i class="icon-star"></i><i
-                                                            class="icon-star"></i><i
-                                                            class="icon-star"></i><em>5.0/5.0</em></span>
-                                                <em>Published 4 days ago</em>
-                                            </div>
-                                            <h4>"Excellent"</h4>
-                                            <p>Sit commodo veritus te, erat legere fabulas has ut. Rebum laudem cum ea,
-                                                ius essent fuisset ut. Viderer petentium cu his.</p>
-                                        </div>
-                                    </div>
-                                </div>
                                 <!-- /row -->
                             </div>
                             <!-- /card-body -->
@@ -301,7 +289,7 @@
                         <div class="box">
                             <i class="ti-headphone-alt"></i>
                             <div class="justify-content-center">
-                                <h3>24/7 Destek</h3>
+                                <h3>7/24 Destek</h3>
                                 <p>Çevrimiçi Destek</p>
                             </div>
                         </div>
@@ -324,4 +312,14 @@
             additionalMarginTop: 90
         });
     </script>
+    <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+        function showHide() {
+            var x = document.getElementById("list");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </SCRIPT>
 @endsection

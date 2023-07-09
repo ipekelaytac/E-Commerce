@@ -8,6 +8,8 @@ use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\PaymentController;
 use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\UserController;
+use App\Http\Controllers\Customer\ContactController;
+use App\Http\Controllers\Customer\AboutUsController;
 use App\Http\Controllers\Management\ManagementBrandController;
 use App\Http\Controllers\Management\ManagementCategoryController;
 use App\Http\Controllers\Management\ManagementIndexController;
@@ -79,61 +81,65 @@ Route::group(['prefix' => 'yonetim', 'namespace' => 'Management'], function () {
 });
 
 
-Route::get('/', [IndexController::class, 'index'])->name('index');
-Route::get('/kategoriler/{slug_collectionname}', [CategoryController::class, 'index'])->name('categories');
-Route::get('/urunler/{slug_productname}', [ProductController::class, 'index'])->name('products');
-Route::post('/ara', [ProductController::class, 'search'])->name('search');
-Route::get('/ara', [ProductController::class, 'search'])->name('search');
+Route::get('/', [IndexController::class, 'index'])->name('customer.index');
+
+Route::get('/kategoriler/{slug_collectionname}', [CategoryController::class, 'index'])->name('customer.categories');
+
+Route::get('/urunler/{slug_productname}', [ProductController::class, 'index'])->name('customer.products');
+
+Route::post('/ara', [ProductController::class, 'search'])->name('customer.search');
+Route::get('/ara', [ProductController::class, 'search'])->name('customer.search');
+
+Route::get('/odeme', [paymentController::class, 'index'])->name('customer.payment');
+Route::post('/odeme', [paymentController::class, 'pay'])->name('customer.pay');
+
+Route::get('/iletisim', [ContactController::class, 'index'])->name('customer.contact');
+Route::get('/hakkimizda', [AboutUsController::class, 'index'])->name('customer.about_us');
+Route::post('/abone-ol', [UserController::class, 'subscriber'])->name('customer.subscriber');
+
+Route::get('/oturumac', [UserController::class, 'login_form'])->name('customer.login');
+
 
 Route::group(['prefix' => 'sepet'], function () {
-    Route::get('/', [CartController::class, 'index'])->name('cart');
-    Route::post('/ekle', [CartController::class, 'add'])->name('cart.add');
-    Route::delete('/kaldir/{rowid}', [CartController::class, 'delete'])->name('cart.delete');
-    Route::delete('/bosalt', [CartController::class, 'unload'])->name('cart.unload');
-    Route::patch('/guncelle/{rowid}', [CartController::class, 'update'])->name('cart.update');
+    Route::get('/', [CartController::class, 'index'])->name('customer.cart');
+    Route::post('/ekle', [CartController::class, 'add'])->name('customer.cart.add');
+    Route::delete('/kaldir/{rowid}', [CartController::class, 'delete'])->name('customer.cart.delete');
+    Route::delete('/bosalt', [CartController::class, 'unload'])->name('customer.cart.unload');
+    Route::patch('/guncelle/{rowid}', [CartController::class, 'update'])->name('customer.cart.update');
 });
 Route::group(['middleware' => 'auth'], function () {
 Route::group(['prefix' => 'favoriurunler'], function () {
-    Route::get('/', [FavoriteProductController::class, 'index'])->name('favorite_products');
-    Route::post('/ekle', [FavoriteProductController::class, 'add'])->name('favorite_products.add');
-    Route::get('/kaldir/{id}', [FavoriteProductController::class, 'delete'])->name('favorite_products.delete');
-    Route::get('/koleksiyon', [FavoriteProductController::class, 'collection'])->name('collection');
-    Route::get('/koleksiyon/{slug_collectionname}', [FavoriteProductController::class, 'collection_product'])->name('collection_product');
-    Route::post('/koleksiyon/ekle', [FavoriteProductController::class, 'collection_add'])->name('collection_add');
-    Route::get('/koleksiyon/kaldir/{id}', [FavoriteProductController::class, 'collection_delete'])->name('collection_delete');
-    Route::post('/kolleksiyonaekle', [FavoriteProductController::class, 'collection_product_add'])->name('collection_product_add');
+    Route::get('/', [FavoriteProductController::class, 'index'])->name('customer.favorite_products');
+    Route::post('/ekle', [FavoriteProductController::class, 'add'])->name('customer.favorite_products.add');
+    Route::get('/kaldir/{id}', [FavoriteProductController::class, 'delete'])->name('customer.favorite_products.delete');
+    Route::get('/koleksiyon', [FavoriteProductController::class, 'collection'])->name('customer.collection');
+    Route::get('/koleksiyon/{slug_collectionname}', [FavoriteProductController::class, 'collection_product'])->name('customer.collection.detail');
+    Route::post('/koleksiyon/ekle', [FavoriteProductController::class, 'collection_add'])->name('customer.collection.add');
+    Route::get('/koleksiyon/kaldir/{id}', [FavoriteProductController::class, 'collection_delete'])->name('customer.collection.delete');
+    Route::post('/kolleksiyonaekle', [FavoriteProductController::class, 'collection_product_add'])->name('customer.collection_product.add');
 });
 });
-
-
-Route::get('/odeme', [paymentController::class, 'index'])->name('payment');
-Route::post('/odeme', [paymentController::class, 'pay'])->name('pay');
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/siparisler', [OrderController::class, 'index'])->name('orders');
-    Route::get('/siparisler/{id}', [OrderController::class, 'detail'])->name('order');
-    Route::post('/siparisler/degerlendir/{id?}', [OrderController::class, 'evaluation_save'])->name('order.evaluation_save');
+    Route::get('/siparisler', [OrderController::class, 'index'])->name('customer.orders');
+    Route::get('/siparisler/{id}', [OrderController::class, 'detail'])->name('customer.order');
+    Route::get('/siparisdegegerlendir/{id}', [OrderController::class, 'reviews'])->name('customer.order.reviews');
+    Route::post('/siparisler/degerlendir/{id?}', [OrderController::class, 'evaluation_save'])->name('customer.order.evaluation_save');
 });
 
 Route::group(['prefix' => 'kullanici'], function () {
-    Route::get('/oturumac', [UserController::class, 'login_form'])->name('user.login');
-    Route::post('/oturumac', [UserController::class, 'login']);
-    Route::get('/kaydol', [UserController::class, 'register_form'])->name('user.register');
-    Route::post('/kaydol', [UserController::class, 'register']);
-    Route::get('/aktiflestir/{key}', [UserController::class, 'activate'])->name('activate');
-    Route::post('/oturumukapat', [UserController::class, 'logout'])->name('user.logout');
+    Route::get('/islemler', [UserController::class, 'operations'])->name('customer.user.operations');
+    Route::post('/oturumac', [UserController::class, 'login'])->name('customer.user.login');
+    Route::post('/kaydol', [UserController::class, 'register'])->name('customer.user.register');
+    Route::get('/aktiflestir/{key}', [UserController::class, 'activate'])->name('customer.activate');
+    Route::post('/oturumukapat', [UserController::class, 'logout'])->name('customer.user.logout');
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/bilgilerim', [UserController::class, 'information'])->name('user.information');
-        Route::post('/bilgilerim', [UserController::class, 'information_update'])->name('user.information_update');
+        Route::get('/bilgilerim', [UserController::class, 'information'])->name('customer.user.information');
+        Route::post('/bilgilerim', [UserController::class, 'information_update'])->name('customer.user.information_update');
     });
-
 });
-Route::get('test/mail', function () {
-    return new App\Mail\UserRecordMail();
-});
-Route::get('/oturumac', [UserController::class, 'login_form'])->name('login');
 
 
 

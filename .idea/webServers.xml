@@ -3,9 +3,9 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="bbb714b6-f3ed-41c1-8c72-5c6337f94d68" name="ftp.aytacipekel.com" url="http://ftp.aytacipekel.com">
-        <fileTransfer rootFolder="/eticaret.aytacipekel.com" host="ftp.aytacipekel.com" port="21">
+        <fileTransfer rootFolder="/eticaret.aytacipekel.com" accessType="SFTP" host="ftp.aytacipekel.com" port="2083" sshConfigId="b1b38fdb-91a8-4b8e-b39a-f2011f1c9434" sshConfig="ftp.aytacipekel.com">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" isUseRsync="true" />
           </advancedOptions>
         </fileTransfer>
       </webServer>

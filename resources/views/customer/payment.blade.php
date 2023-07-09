@@ -4,6 +4,7 @@
     <link href="{{ asset('customer/css/checkout.css') }}" rel="stylesheet">
 @endsection
 @section('content')
+    @include('customer.layouts.partials.alert')
 
     <main class="bg_gray">
 

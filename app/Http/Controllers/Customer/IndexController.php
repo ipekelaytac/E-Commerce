@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ProductDetail;
+use http\Client\Request;
+use Illuminate\Support\Facades\Http;
 
 class IndexController extends Controller
 {
+
     public function index()
     {
-        $categories = Category::whereRaw('top_id is null')->take(8)->get();
+        $brands = Brand::all();
 
         $products_slider = ProductDetail::with('product')
             ->where('show_slider', 1)
@@ -36,9 +41,14 @@ class IndexController extends Controller
         $products_discount = ProductDetail::with('product')
             ->where('show_discount', 1)
             ->orderBy('updated_at', 'desc')
-            ->take(4)->get();
+            ->get();
+        $ap = Http::get('https://www.tcmb.gov.tr/kurlar/today.xml');
 
 
-        return view('customer.index', compact('categories', 'products_slider', 'product_opportunity_of_the_day', 'products_featured', 'products_lots_selling', 'products_discount'));
+        $api=json_decode($ap);
+        dd($api);
+
+
+        return view('customer.index', compact('brands','api', 'products_slider', 'product_opportunity_of_the_day', 'products_featured', 'products_lots_selling', 'products_discount'));
     }
 }

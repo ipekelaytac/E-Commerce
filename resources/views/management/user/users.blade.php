@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="card-body pd-0 collapse show" id="productSalesDetails">
-                    @include('layouts.partials.alert')
+            @include('management.layouts.partials.alert')
                     <div class="table-responsive">
                         <table id="basicDataTable" class="table card-table tx-center">
                             <thead class="tx-10 tx-uppercase">

@@ -14,7 +14,8 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.alert')
+    @include('management.layouts.partials.alert')
+
     <div class="row row-xs">
         <div class="col-xl-12">
             <div class="card mg-b-20">

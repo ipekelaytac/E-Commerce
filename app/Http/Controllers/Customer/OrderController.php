@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\ProductEvaluation;
 use Illuminate\Support\Facades\File;
@@ -42,6 +43,8 @@ class OrderController extends Controller
             ->get();
         return view('customer.order', compact('order','evaluation','evaluation_product'));
     }
+
+
 
     public function evaluation_save()
     {
@@ -100,7 +103,7 @@ class OrderController extends Controller
         }
 
         return redirect()
-            ->route('order',request('order_id'))
+            ->route('customer.order',request('order_id'))
             ->with('message', 'Ürün Değerlendirildi.')
             ->with('message_type', 'success');
     }

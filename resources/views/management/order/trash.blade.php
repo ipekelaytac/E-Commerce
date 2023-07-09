@@ -11,7 +11,8 @@
             <div class="pull-left"><h1 class="pd-0 mg-0 tx-20 text-overflow">Siparişler Çöp Kutusu</h1></div>
         </div>
     </div>
-    @include('layouts.partials.alert')
+    @include('management.layouts.partials.alert')
+
     <div class="row row-xs">
         <div class="col-xl-12">
             <div class="card mg-b-20">

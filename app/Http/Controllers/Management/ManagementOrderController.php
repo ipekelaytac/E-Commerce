@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Management;
 
-use App\Http\Controllers\Customer\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\ProductEvaluation;
 
 class ManagementOrderController extends Controller
 {
@@ -18,6 +19,7 @@ class ManagementOrderController extends Controller
 
         return view('/management/order/order', compact('list'));
     }
+
 
 public function form($id = 0)
     {

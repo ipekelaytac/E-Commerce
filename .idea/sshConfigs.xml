@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="ftp.aytacipekel.com" id="b1b38fdb-91a8-4b8e-b39a-f2011f1c9434" port="2083" customName="ftp.aytacipekel.com" nameFormat="CUSTOM" username="aytacipekel" useOpenSSHConfig="true">
+        <option name="customName" value="ftp.aytacipekel.com" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>

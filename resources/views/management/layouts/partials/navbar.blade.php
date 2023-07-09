@@ -192,7 +192,7 @@
                                 class="ion-navicon tx-20"></i></a>
                     </li>
                     <li class="pull-right">
-                        <a class="btn btn-success btn-md mt-1 hidden-xs" href="{{route('index')}}"><i
+                        <a class="btn btn-success btn-md mt-1 hidden-xs" href="{{route('customer.index')}}"><i
                                 class="fa fa-eye tx-bold"></i><b class="mg-l-10 hidden-xs">Siteye Git</b></a>
                         <a class="btn btn-success btn-md mt-1 hidden-sm hidden-md hidden-lg" href=""
                            data-toggle="tooltip" data-trigger="hover" data-placement="right" title=""

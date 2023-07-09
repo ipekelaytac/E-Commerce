@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Management;
 
-use App\Http\Controllers\Customer\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use http\Env\Request;
 use Illuminate\Support\Facades\DB;
 
 class ManagementIndexController extends Controller
@@ -117,6 +118,7 @@ class ManagementIndexController extends Controller
             $year_sales[$interval] = $str;
             $month++;
         }
+
 
 
         return view('/management/index', compact('color', 'color_int', 'year_sales', 'total_order', 'best_selling_categories', 'best_selling_products_category', 'highest_orders', 'all_sales', 'day_sales', 'day_sales_product', 'orders', 'pending_order', 'completed_order', 'total_product', 'total_category', 'total_user', 'best_selling_products'));

@@ -13,7 +13,7 @@
         {{ csrf_field() }}
         <img src="/img/logo.png" class="logo">
 
-        @include('layouts.partials.errors')
+        @include('management.layouts.partials.errors')
 
         <label for="email" class="sr-only">Email</label>
         <input type="email" id="email" name="email" class="form-control" placeholder="Email" required autofocus>

@@ -17,8 +17,8 @@
             Sipariş {{ $entry->id > 0 ? "Düzenle" : "Ekle" }}
         </h3>
 
-        @include('layouts.partials.errors')
-        @include('layouts.partials.alert')
+        @include('management.layouts.partials.errors')
+@include('management.layouts.partials.alert')
 
         <div class="row">
             <div class="col-md-4">

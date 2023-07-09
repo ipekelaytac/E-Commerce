@@ -5,7 +5,8 @@
     <link type="text/css" rel="stylesheet" href="/management/plugins/datatables/extensions/dataTables.jqueryui.min.css"/>
 @endsection
 @section('content')
-    @include('layouts.partials.alert')
+    @include('management.layouts.partials.alert')
+
     <div class="row row-xs">
         <div class="col-xl-12">
             <div class="card mg-b-20">

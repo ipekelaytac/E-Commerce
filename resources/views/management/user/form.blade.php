@@ -18,8 +18,8 @@
     </div>
     <form role="form" action="{{ route('management.user.save', $entry->id) }}" method="POST">
         {{ csrf_field() }}
-        @include('layouts.partials.errors')
-        @include('layouts.partials.alert')
+        @include('management.layouts.partials.errors')
+@include('management.layouts.partials.alert')
         <div class="row row-xs">
             <div class="col-md-12 col-lg-12">
                 <div class="card mg-b-10">

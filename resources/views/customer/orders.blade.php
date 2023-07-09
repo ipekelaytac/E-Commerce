@@ -24,27 +24,30 @@
                     <th>Toplam Ürün</th>
                     <th>Tutar</th>
                     <th>Durum</th>
-                    <th>İncele</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                @foreach($orders as $order)
+
+                    <tr>
                     <td>
-                        <span>#23</span>
+                        <span>SP-{{ $order->id }}</span>
                     </td>
                     <td>
-                        <strong>10</strong>
+                        <strong>{{ $order->order_price * ((100+config('cart.tax'))/100) }} ₺</strong>
                     </td>
                     <td>
-                        <strong>$140.00</strong>
+                        <strong>{{ $order->MainCart->cartproductnumber() }}/strong>
                     </td>
                     <td>
-                        <strong>Sipariş Tamamlandı.</strong>
+                        <strong>{{ $order->situation }}</strong>
                     </td>
                     <td class="options">
-                        <a href="#"><i class="ti-info"></i></a>
+                        <a href="{{ route('customer.order',$order->id) }}"><i class="ti-info-alt"></i></a>
                     </td>
                 </tr>
+                @endforeach
 
                 </tbody>
             </table>

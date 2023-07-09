@@ -1,10 +1,10 @@
-@extends('layouts.master')
+@extends('customer.layouts.master')
 @section('title', 'Kullanıcı Bilgileri')
 @section('content')
     <div class="container">
         <div class="bg-content">
             <h2>Kullanıcı Bilgileri</h2>
-            @include('layouts.partials.alert')
+            @include('customer.layouts.partials.alert')
             <div class="container rounded bg-white mt-5 mb-5">
                 <div class="row">
                     <div class="col-md-3 border-right">
@@ -13,7 +13,7 @@
                             <span>Üyelik Tarihi: {{ $user->created_at }} </span>
                         </div>
                     </div>
-                    <form action="{{ route('user.information_update') }}" method="post">
+                    <form action="{{ route('customer.user.information_update') }}" method="post">
                         {{ csrf_field() }}
                         <div class="col-md-5 border-right">
                             <div class="row mt-3">

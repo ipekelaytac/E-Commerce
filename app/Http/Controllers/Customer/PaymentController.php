@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
@@ -11,11 +12,11 @@ class PaymentController extends Controller
     public function index()
     {
         if (!auth()->check()) {
-            return redirect()->route('user.login')
+            return redirect()->route('customer.user.login')
                 ->with('message_type', 'info')
                 ->with('message', 'Ödeme işlemi için oturum açmanız veya kullanıcı kaydı yapmanız gerekmektedir.');
         } else if (count(Cart::content()) == 0) {
-            return redirect()->route('index')
+            return redirect()->route('customer.index')
                 ->with('message_type', 'info')
                 ->with('message', 'Ödeme işlemi için sepetinizde bir ürün bulunmalıdır.');
         }
@@ -47,7 +48,7 @@ class PaymentController extends Controller
         Cart::destroy();
         session()->forget('active_cart_id');
 
-        return redirect()->route('orders')
+        return redirect()->route('customer.orders')
             ->with('message_type', 'success')
             ->with('message', 'Ödemeniz başarılı bir şekilde gerçekleşti.');
     }

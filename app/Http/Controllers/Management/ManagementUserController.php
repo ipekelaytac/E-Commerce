@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Management;
 
-use App\Http\Controllers\Customer\Controller;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserDetail;
 use Illuminate\Support\Facades\Auth;
