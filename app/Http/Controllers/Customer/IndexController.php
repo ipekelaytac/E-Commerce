@@ -42,11 +42,7 @@ class IndexController extends Controller
             ->where('show_discount', 1)
             ->orderBy('updated_at', 'desc')
             ->get();
-        $ap = Http::get('https://www.tcmb.gov.tr/kurlar/today.xml');
 
-
-        $api=json_decode($ap);
-        dd($api);
 
 
         return view('customer.index', compact('brands','api', 'products_slider', 'product_opportunity_of_the_day', 'products_featured', 'products_lots_selling', 'products_discount'));
