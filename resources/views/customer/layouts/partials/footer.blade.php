@@ -5,12 +5,12 @@
                 <h3 data-bs-target="#collapse_1">Menü</h3>
                 <div class="collapse dont-collapse-sm links" id="collapse_1">
                     <ul>
-                        <li><a href="about.html">Anasayfa</a></li>
-                        <li><a href="help.html">İletişim</a></li>
-                        <li><a href="help.html">Hakkımız</a></li>
-                        <li><a href="account.html">Hesabım</a></li>
-                        <li><a href="blog.html">S.S.S</a></li>
-                        <li><a href="contacts.html">Yardım</a></li>
+                        <li><a href="{{route('customer.index')}}">Anasayfa</a></li>
+                        <li><a href="{{route('customer.contact')}}">İletişim</a></li>
+                        <li><a href="{{route('customer.about_us')}}">Hakkımızda</a></li>
+                        <li><a href="{{route('customer.user.information')}}">Hesabım</a></li>
+                        <li><a href="#">S.S.S</a></li>
+                        <li><a href="#">Yardım</a></li>
                     </ul>
                 </div>
             </div>
@@ -18,12 +18,9 @@
                 <h3 data-bs-target="#collapse_2">Kategoriler</h3>
                 <div class="collapse dont-collapse-sm links" id="collapse_2">
                     <ul>
-                        <li><a href="listing-grid-1-full.html">Clothes</a></li>
-                        <li><a href="listing-grid-2-full.html">Electronics</a></li>
-                        <li><a href="listing-grid-1-full.html">Furniture</a></li>
-                        <li><a href="listing-grid-3.html">Glasses</a></li>
-                        <li><a href="listing-grid-1-full.html">Shoes</a></li>
-                        <li><a href="listing-grid-1-full.html">Watches</a></li>
+                        @foreach($categories as $category)
+                            <li><a href="{{ route('customer.categories', $category->slug) }}">{{ $category->category_name }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -42,8 +39,12 @@
                 <div class="collapse dont-collapse-sm" id="collapse_4">
                     <div id="newsletter">
                         <div class="form-group">
-                            <input type="email" name="email_newsletter" id="email_newsletter" class="form-control" placeholder="Email Giriniz">
+                            <form class="form-inline" method="post" action="{{route('customer.subscriber')}}">
+                                {{csrf_field()}}
+                            <input type="email" id="email_newsletter" class="form-control" name="email" placeholder="Email Giriniz">
                             <button type="submit" id="submit-newsletter"><i class="ti-angle-double-right"></i></button>
+                            </form>
+
                         </div>
                     </div>
                     <div class="follow_us">

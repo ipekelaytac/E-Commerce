@@ -5,6 +5,7 @@
 
 @endsection
 @section('content')
+    @include('customer.layouts.partials.alert')
 
     <main class="bg_gray">
         <div class="container margin_30">
@@ -15,13 +16,13 @@
                         <li>Koleksiyonlar</li>
                     </ul>
                 </div>
-                <div class="row">
+                    <div class="d-flex justify-content-between">
                     <h1 class="d-flex flex-row">Koleksiyonlar</h1>
                     <div class="d-flex flex-row-reverse">
 
-                        <form action="" method="post">
+                        <form action="{{ route('customer.collection.add') }}" method="post">
+                            {{ csrf_field() }}
                             <label class="mt-1">Koleksiyon Ekle</label>
-
                             <input type="text" name="collection_name">
                             <button type="submit" class="btn btn-success">
                                 Ekle
@@ -45,17 +46,19 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($favorite_collections as $collection)
                 <tr>
                     <td>
-                        <span class="item_cart  m-1">Armor Air x Fear</span>
-
+                        <a href="{{ route('customer.collection.detail',$collection->slug) }}">
+                        <span class="item_cart  m-1">{{ $collection->collection_name }}</span>
+                        </a>
                     </td>
 
                     <td class="options">
-                        <a href="#"><i class="ti-trash"></i></a>
+                        <a href="{{ route('customer.collection.delete',$collection->id ) }}"><i class="ti-trash"></i></a>
                     </td>
                 </tr>
-
+                @endforeach
                 </tbody>
             </table>
 

@@ -5,6 +5,7 @@
 
 @endsection
 @section('content')
+    @include('customer.layouts.partials.alert')
 
     <main class="bg_gray">
         <div class="container margin_30">
@@ -36,25 +37,38 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        <div class="thumb_cart">
-                            <img src="img/products/product_placeholder_square_small.jpg"
-                                 data-src="img/products/shoes/2.jpg" class="lazy" alt="Image">
-                        </div>
-                        <span class="item_cart">Armor Okwahn II</span>
-                    </td>
+                @foreach($favorite_products as $favorite_product)
+                    <tr>
+
+                        <td>
+                            <a href="{{ route('customer.products',$favorite_product->product->slug) }}">
+
+                                <div class="thumb_cart">
+                                    <img src="{{ $favorite_product->product->detail->product_image!=null ? asset('uploads/products/' . $favorite_product->product->detail->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}"
+                                         data-src="{{ $favorite_product->product->detail->product_image!=null ? asset('uploads/products/' . $favorite_product->product->detail->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}" class="lazy" alt="Image">
+                                </div>
+                                <span class="item_cart">{{ $favorite_product->product->product_name }}</span>
+                            </a>
+                        </td>
 
 
-                    <td>
-                        <strong>$110.00</strong>
-                    </td>
-                    <td class="options">
-                        <a href="#"><i class="ti-trash"></i></a>
-                        <a href="#"><i class="ti-shopping-cart"></i></a>
+                        <td>
+                            <strong>{{ $favorite_product->product->price }} ₺</strong>
+                        </td>
+                        <td class="options">
+                            <a href="{{ route('customer.favorite_products.delete',$favorite_product->id ) }}"><i class="ti-trash"></i></a>
+                            <a onclick="document.getElementById('fav').submit();"><i class="ti-shopping-cart"></i></a>
 
-                    </td>
-                </tr>
+                            <form id="fav" action="{{route('customer.favorite_products.add')}}" method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="id" value="{{ $favorite_product->product->id }}">
+
+                            </form>
+
+                        </td>
+                    </tr>
+                @endforeach
+
                 </tbody>
             </table>
 

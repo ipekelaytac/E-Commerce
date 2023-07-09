@@ -17,8 +17,9 @@
             </div>
         </div>
     </div>
-    @include('layouts.partials.errors')
-    @include('layouts.partials.alert')
+    @include('management.layouts.partials.errors')
+    @include('management.layouts.partials.alert')
+
     <form role="form" action="{{ route('management.brand.save', $entry->id) }}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
 

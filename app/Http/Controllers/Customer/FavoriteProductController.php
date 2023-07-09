@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Models\FavoriteProduct;
+use App\Http\Controllers\Controller;
 use App\Models\Collection;
+use App\Models\FavoriteProduct;
 use App\Models\Product;
 use Illuminate\Support\Str;
 
@@ -38,12 +39,12 @@ class FavoriteProductController extends Controller
         }
         else{
             return redirect()
-                ->route('products', $product->slug)
+                ->route('customer.products', $product->slug)
                 ->with('message', 'Bu ürün favorilerde var!')
                 ->with('message_type', 'warning');
         }
         return redirect()
-            ->route('products', $product->slug)
+            ->route('customer.products', $product->slug)
             ->with('message', 'Favorilere eklendi.')
             ->with('message_type', 'success');
     }
@@ -53,7 +54,7 @@ class FavoriteProductController extends Controller
         $favorite_products->delete();
 
         return redirect()
-            ->route('favorite_products')
+            ->route('customer.favorite_products')
             ->with('message', 'Ürün silindi')
             ->with('message_type', 'success');
     }
@@ -91,7 +92,7 @@ class FavoriteProductController extends Controller
         ]);
 
         return redirect()
-            ->route('collection')
+            ->route('customer.collection')
             ->with('message', 'Koleksiyon eklendi.')
             ->with('message_type', 'success');
     }
@@ -101,7 +102,7 @@ class FavoriteProductController extends Controller
         $collection->delete();
 
         return redirect()
-            ->route('collection')
+            ->route('customer.collection')
             ->with('message', 'Koleksiyon silindi')
             ->with('message_type', 'success');
     }
@@ -121,12 +122,12 @@ class FavoriteProductController extends Controller
         }
         else{
             return redirect()
-                ->route('products', $product->slug)
+                ->route('customer.products', $product->slug)
                 ->with('message', 'Bu koleksiyonda ürün var!')
                 ->with('message_type', 'warning');
         }
         return redirect()
-            ->route('products', $product->slug)
+            ->route('customer.products', $product->slug)
             ->with('message', 'Koleksiyona eklendi.')
             ->with('message_type', 'success');
     }

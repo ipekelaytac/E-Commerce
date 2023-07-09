@@ -29,7 +29,8 @@
         <button type="submit" class="btn btn-primary">Ara</button>
         <a href="{{ route('management.category') }}" class="btn btn-primary">Temizle</a>
     </form>
-    @include('layouts.partials.alert')
+    @include('management.layouts.partials.alert')
+
     <div class="row row-xs">
         <div class="col-xl-12">
             <div class="card mg-b-20">

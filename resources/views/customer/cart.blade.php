@@ -4,6 +4,7 @@
     <link href="{{ asset('customer/css/cart.css') }}" rel="stylesheet">
 @endsection
 @section('content')
+    @include('customer.layouts.partials.alert')
 
     <main class="bg_gray">
         <div class="container margin_30">
@@ -38,101 +39,70 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        <div class="thumb_cart">
-                            <img src="img/products/product_placeholder_square_small.jpg"
-                                 data-src="img/products/shoes/1.jpg" class="lazy" alt="Image">
-                        </div>
-                        <span class="item_cart">Armor Air x Fear</span>
-                    </td>
-                    <td>
-                        <strong>$140.00</strong>
-                    </td>
-                    <td>
-                        <div class="numbers-row">
-                            <input type="text" value="1" id="quantity_1" class="qty2" name="quantity_1">
-                            <div class="inc button_inc">+</div>
-                            <div class="dec button_inc">-</div>
-                        </div>
-                    </td>
-                    <td>
-                        <strong>$140.00</strong>
-                    </td>
-                    <td class="options">
-                        <a href="#"><i class="ti-trash"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="thumb_cart">
-                            <img src="img/products/product_placeholder_square_small.jpg"
-                                 data-src="img/products/shoes/2.jpg" class="lazy" alt="Image">
-                        </div>
-                        <span class="item_cart">Armor Okwahn II</span>
-                    </td>
-                    <td>
-                        <strong>$110.00</strong>
-                    </td>
-                    <td>
-                        <div class="numbers-row">
-                            <input type="text" value="1" id="quantity_2" class="qty2" name="quantity_2">
-                            <div class="inc button_inc">+</div>
-                            <div class="dec button_inc">-</div>
-                        </div>
-                    </td>
-                    <td>
-                        <strong>$110.00</strong>
-                    </td>
-                    <td class="options">
-                        <a href="#"><i class="ti-trash"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="thumb_cart">
-                            <img src="img/products/product_placeholder_square_small.jpg"
-                                 data-src="img/products/shoes/3.jpg" class="lazy" alt="Image">
-                        </div>
-                        <span class="item_cart">Armor Air Wildwood ACG</span>
-                    </td>
-                    <td>
-                        <strong>$90.00</strong>
-                    </td>
+                @foreach(Cart::content() as $productCartItem)
 
-                    <td>
-                        <div class="numbers-row">
-                            <input type="text" value="1" id="quantity_3" class="qty2" name="quantity_3">
-                            <div class="inc button_inc">+</div>
-                            <div class="dec button_inc">-</div>
-                        </div>
-                    </td>
-                    <td>
-                        <strong>$90.00</strong>
-                    </td>
-                    <td class="options">
-                        <a href="#"><i class="ti-trash"></i></a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <div class="thumb_cart">
+                                <img
+                                    src="{{ $productCartItem->options->product_image!=null ? asset('uploads/products/' . $productCartItem->options->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}"
+                                    data-src="{{ $productCartItem->options->product_image!=null ? asset('uploads/products/' . $productCartItem->options->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}"
+                                    class="lazy" alt="Image">
+                            </div>
+                            <span class="item_cart">{{ $productCartItem->product_name }}</span>
+                        </td>
+                        <td>
+                            <strong>{{$productCartItem->price}} ₺</strong>
+                        </td>
+                        <td>
+{{--                            <a href="#" class="btn btn-xs btn-default product-reduce-the-amount"--}}
+{{--                               data-id="{{ $productCartItem->rowId}}"--}}
+{{--                               data-number="{{ $productCartItem->qty-1 }}">-</a>--}}
+{{--                            <span style="padding: 10px 20px">{{$productCartItem->qty}}</span>--}}
+{{--                            <a href="#" class="btn btn-xs btn-default product-increase-the-amount"--}}
+{{--                               data-id="{{ $productCartItem->rowId}}"--}}
+{{--                               data-number="{{ $productCartItem->qty+1 }}">+</a>--}}
+
+                                                    <div class="numbers-row">
+                                                        <input type="text" value="{{$productCartItem->qty}}" id="quantity_1" class="qty2" name="quantity_1">
+                                                        <a href="#"  data-id="{{ $productCartItem->rowId}}"
+                                                           data-number="{{ $productCartItem->qty+1 }}" class="inc button_inc">+</a>
+                                                        <a href="#"  data-id="{{ $productCartItem->rowId}}"
+                                                           data-number="{{ $productCartItem->qty-1 }}" class="dec button_inc">-</a>
+                                                    </div>
+                        </td>
+                        <td>
+                            <strong>{{$productCartItem->subtotal}} ₺</strong>
+                        </td>
+                        <td class="options">
+
+                        <form id="del" action="{{ route('customer.cart.delete',$productCartItem->rowId) }}" method="post">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <a class="action"onclick="document.getElementById('del').submit();"><i class="ti-trash"></i></a>
+                        </form>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
 
-            <div class="row add_top_30 flex-sm-row-reverse cart_actions">
-                <div class="col-sm-4 text-end">
-                    <button type="button" class="btn_1 gray">Update Cart</button>
-                </div>
-                {{--                <div class="col-sm-8">--}}
-                {{--                    <div class="apply-coupon">--}}
-                {{--                        <div class="form-group">--}}
-                {{--                            <div class="row g-2">--}}
-                {{--                                <div class="col-md-6"><input type="text" name="coupon-code" value="" placeholder="Promo code" class="form-control"></div>--}}
-                {{--                                <div class="col-md-4"><button type="button" class="btn_1 outline">Apply Coupon</button></div>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
-            </div>
-            <!-- /cart_actions -->
+{{--            <div class="row add_top_30 flex-sm-row-reverse cart_actions">--}}
+{{--                <div class="col-sm-4 text-end">--}}
+{{--                    <button type="button" class="btn_1 gray">Update Cart</button>--}}
+{{--                </div>--}}
+{{--                --}}{{--                <div class="col-sm-8">--}}
+{{--                --}}{{--                    <div class="apply-coupon">--}}
+{{--                --}}{{--                        <div class="form-group">--}}
+{{--                --}}{{--                            <div class="row g-2">--}}
+{{--                --}}{{--                                <div class="col-md-6"><input type="text" name="coupon-code" value="" placeholder="Promo code" class="form-control"></div>--}}
+{{--                --}}{{--                                <div class="col-md-4"><button type="button" class="btn_1 outline">Apply Coupon</button></div>--}}
+{{--                --}}{{--                            </div>--}}
+{{--                --}}{{--                        </div>--}}
+{{--                --}}{{--                    </div>--}}
+{{--                --}}{{--                </div>--}}
+{{--            </div>--}}
+{{--            <!-- /cart_actions -->--}}
 
         </div>
         <!-- /container -->
@@ -143,7 +113,7 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <ul>
                             <li>
-                                <span>Toplam Fiyat</span> $240.00
+                                <span>Toplam Fiyat</span> {{Cart::subtotal()}} ₺
                             </li>
                             {{--                            <li>--}}
                             {{--                                <span>Kargo</span> $7.00--}}
@@ -152,7 +122,7 @@
                             {{--                                <span>Total</span> $247.00--}}
                             {{--                            </li>--}}
                         </ul>
-                        <a href="cart-2.html" class="btn_1 full-width cart">Sipariş Ver</a>
+                        <a href="{{route('customer.payment')}}" class="btn_1 full-width cart">Sipariş Ver</a>
                     </div>
                 </div>
             </div>
@@ -163,4 +133,20 @@
 
 @endsection
 @section('js')
+    <script>
+        $(function () {
+            $('.product-increase-the-amount,.product-reduce-the-amount').on('click', function () {
+                var id = $(this).attr('data-id');
+                var number = $(this).attr('data-number');
+                $.ajax({
+                    type: 'PATCH',
+                    url: '{{ url('sepet/guncelle') }}/' + id,
+                    data: {number: number},
+                    success: function (result) {
+                        window.location.href = '{{route('customer.cart')}}';
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

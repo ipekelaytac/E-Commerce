@@ -2,35 +2,37 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 
 class CategoryController extends Controller
 {
     public function index($slug_categoryname)
     {
-        $categories = Category::where('slug' ,$slug_categoryname)->firstOrFail();
-        $botcategories = Category::where('top_id', $categories->id)->get();
-        $topcategories= Category::find($categories->top_id);
+        $category = Category::where('slug' ,$slug_categoryname)->firstOrFail();
+        $botcategories = Category::where('top_id', $category->id)->get();
+        $topcategories= Category::find($category->top_id);
+        $categories = Category::all();
 
         $order = request('sırala');
-        if ($order == 'coksatanlar') {
-            $products = $categories->products()
+        if ($order == 'cok-satanlar') {
+            $products = $category->products()
                 ->join('product_detail', 'product_detail.product_id', 'products.id')
                 ->orderBy('product_detail.show_lots_selling', 'desc')
                 ->get();
         }else if ($order == 'yeni') {
-            $products = $categories->products()->distinct()->OrderByDesc('created_at')->get();
+            $products = $category->products()->distinct()->OrderByDesc('created_at')->get();
         }
-        else if ($order == 'fiyatagoreartan') {
-            $products = $categories->products()->distinct()->OrderBy('price','ASC')->get();
+        else if ($order == 'fiyata-gore-artan') {
+            $products = $category->products()->distinct()->OrderBy('price','ASC')->get();
         }
-        else if ($order == 'fiyatagoreazalan') {
-            $products = $categories->products()->distinct()->OrderByDesc('price')->get();
+        else if ($order == 'fiyata-gore-azalan') {
+            $products = $category->products()->distinct()->OrderByDesc('price')->get();
         }
         else{
-            $products = $categories->products()->distinct()->get();
+            $products = $category->products()->distinct()->get();
         }
 
-        return view('customer.category', compact( 'products','categories','botcategories','topcategories'));
+        return view('customer.category', compact( 'products','category','botcategories','topcategories','categories'));
     }
 }

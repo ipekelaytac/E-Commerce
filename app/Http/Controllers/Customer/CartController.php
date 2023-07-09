@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\CartProduct;
 use App\Models\MainCart;
 use App\Models\Product;
@@ -46,7 +47,7 @@ class CartController extends Controller
             );
         }
 
-        return redirect()->route('cart')
+        return redirect()->route('customer.cart')
             ->with('message_type','success')
             ->with('message','Ürün sepete eklendi');
 
@@ -60,7 +61,7 @@ class CartController extends Controller
             CartProduct::where('main_cart_id',$active_cart_id)->where('product_id',$cartItem->id)->delete();
         }
         Cart::remove($rowid);
-        return redirect()->route('cart')
+        return redirect()->route('customer.cart')
         ->with('message_type','success')
         ->with('message','Ürün sepetten kaldırıldı.');
     }
@@ -72,7 +73,7 @@ class CartController extends Controller
             CartProduct::where('main_cart_id',$active_cart_id)->delete();
         }
         Cart::destroy();
-        return redirect()->route('cart')
+        return redirect()->route('customer.cart')
             ->with('message_type','success')
             ->with('message','Sepetten boşaltıldı.');
     }
