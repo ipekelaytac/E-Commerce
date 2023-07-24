@@ -45,6 +45,6 @@ class IndexController extends Controller
 
 
 
-        return view('customer.index', compact('brands','api', 'products_slider', 'product_opportunity_of_the_day', 'products_featured', 'products_lots_selling', 'products_discount'));
+        return view('customer.index', compact('brands', 'products_slider', 'product_opportunity_of_the_day', 'products_featured', 'products_lots_selling', 'products_discount'));
     }
 }

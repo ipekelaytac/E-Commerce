@@ -5,18 +5,12 @@
 @endsection
 @section('content')
 
-
-
-@foreach($api as $ap)
-    <p>{{ $ap->Isim }}</p>
-@endforeach
     <main>
         <div id="carousel-home">
             <div class="owl-carousel owl-theme">
                 @foreach($products_slider as $index => $product)
-
                 <div class="owl-slide cover"
-                     style="background-image: url(/customer/img/slides/slide_home_2.jpg);">
+                     style="background-image: url({{ $product->product_image!=null ? asset('uploads/products/' . $product->product_image) : 'customer/img/products/product_placeholder_square_medium.jpg' }});">
                     <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                         <div class="container">
                             <div class="row justify-content-center justify-content-md-end">
@@ -53,7 +47,7 @@
                     <div class="grid_item">
                         <figure>
                             <a href="{{ route('customer.products', $product->product->slug) }}">
-                                <img class="img-fluid lazy"
+                                <img class="img-fluid lazy" style="height: 200px"
                                      src="{{ $product->product_image!=null ? asset('uploads/products/' . $product->product_image) : 'customer/img/products/product_placeholder_square_medium.jpg' }}"
                                      data-src="{{ $product->product_image!=null ? asset('uploads/products/' . $product->product_image) : 'customer/img/products/product_placeholder_square_medium.jpg' }}" alt="">
                             </a>
@@ -99,7 +93,7 @@
                         <div class="grid_item">
                             <figure>
                                 <a href="{{ route('customer.products', $product->product->slug) }}">
-                                    <img class="img-fluid lazy"
+                                    <img class="img-fluid lazy"style="height: 200px"
                                          data-src="{{ $product->product_image!=null ? asset('uploads/products/' . $product->product_image) : 'customer/img/products/product_placeholder_square_medium.jpg' }}" alt="">
                                 </a>
                             </figure>
@@ -136,7 +130,7 @@
 {{--                        <span class="ribbon off">-30%</span>--}}
                         <figure>
                             <a href="{{ route('customer.products', $product->product->slug) }}">
-                                <img class="owl-lazy"
+                                <img class="owl-lazy"style="height: 200px"
                                      src="{{ $product->product_image!=null ? asset('uploads/products/' . $product->product_image) : 'customer/img/products/product_placeholder_square_medium.jpg' }}"
                                      data-src="{{ $product->product_image!=null ? asset('uploads/products/' . $product->product_image) : 'customer/img/products/product_placeholder_square_medium.jpg' }}" alt="">
                             </a>

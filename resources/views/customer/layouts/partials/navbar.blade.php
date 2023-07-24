@@ -76,7 +76,7 @@
                                     <div class="total_drop">
                                         <div class="clearfix"><strong>Toplam Fiyat</strong><span>{{Cart::subtotal()}} ₺</span></div>
                                         <a href="{{route('customer.cart')}}" class="btn_1 outline">Sepete Git</a><a
-                                            href="{{route('customer.pay')}}" class="btn_1">Ödemeye Geç</a>
+                                            href="{{route('customer.payment')}}" class="btn_1">Ödemeye Geç</a>
                                     </div>
                                 </div>
                                 @else

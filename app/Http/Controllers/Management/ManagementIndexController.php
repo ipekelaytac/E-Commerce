@@ -14,7 +14,7 @@ class ManagementIndexController extends Controller
 {
     public function index()
     {
-        $pending_order = Order::where('situation', 'Siparişiniz alındı')->count();
+        $pending_order = Order::where('situation', 'Siparişiniz alındı.')->count();
         $completed_order = Order::where('situation', 'Sipariş tamamlandı')->count();
         $total_product = Product::count();
         $total_category = Category::count();

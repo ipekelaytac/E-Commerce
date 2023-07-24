@@ -12,7 +12,7 @@ class PaymentController extends Controller
     public function index()
     {
         if (!auth()->check()) {
-            return redirect()->route('customer.user.login')
+            return redirect()->route('customer.login')
                 ->with('message_type', 'info')
                 ->with('message', 'Ödeme işlemi için oturum açmanız veya kullanıcı kaydı yapmanız gerekmektedir.');
         } else if (count(Cart::content()) == 0) {

@@ -99,6 +99,10 @@
                                            placeholder="Email*">
                                 </div>
                                 <div class="form-group">
+                                    <input type="text" class="form-control" name="name_surname" id="email_2"
+                                           placeholder="Ad Soyad*">
+                                </div>
+                                <div class="form-group">
                                     <input type="password" class="form-control" name="password" id="password_in_2"
                                            value="" placeholder="Şifre*">
                                 </div>
@@ -106,6 +110,7 @@
                                     <input type="password" class="form-control" name="password_confirmation" id="password_in_2"
                                            value="" placeholder="Yeni Şifre Tekrar*">
                                 </div>
+
                                 <hr>
                                 {{--                            <div class="form-group">--}}
                                 {{--                                <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private--}}
@@ -121,18 +126,7 @@
                                     Zorunlu Olmayan
                                     Alanlar</small>
                                 <div class="private box">
-                                    <div class="row no-gutters">
-                                        <div class="col-12 pr-1">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="name_surname" placeholder="Ad Soyad*">
-                                            </div>
-                                        </div>
-                                        {{--                                    <div class="col-12">--}}
-                                        {{--                                        <div class="form-group">--}}
-                                        {{--                                            <input type="text" class="form-control" placeholder="Full Address*">--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                    </div>--}}
-                                    </div>
+
                                     <div class="row no-gutters">
                                         <div class="col-12 pr-1">
                                             <div class="form-group">

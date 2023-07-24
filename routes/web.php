@@ -91,13 +91,13 @@ Route::post('/ara', [ProductController::class, 'search'])->name('customer.search
 Route::get('/ara', [ProductController::class, 'search'])->name('customer.search');
 
 Route::get('/odeme', [paymentController::class, 'index'])->name('customer.payment');
-Route::post('/odeme', [paymentController::class, 'pay'])->name('customer.pay');
+Route::post('/odemeyap', [paymentController::class, 'pay'])->name('customer.pay');
 
 Route::get('/iletisim', [ContactController::class, 'index'])->name('customer.contact');
 Route::get('/hakkimizda', [AboutUsController::class, 'index'])->name('customer.about_us');
 Route::post('/abone-ol', [UserController::class, 'subscriber'])->name('customer.subscriber');
 
-Route::get('/oturumac', [UserController::class, 'login_form'])->name('customer.login');
+Route::get('/oturumac', [UserController::class, 'operations'])->name('customer.login');
 
 
 Route::group(['prefix' => 'sepet'], function () {

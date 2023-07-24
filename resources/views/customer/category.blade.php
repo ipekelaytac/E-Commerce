@@ -13,26 +13,48 @@
                 <aside class="col-lg-3" id="sidebar_fixed">
                     <div class="filter_col">
                         <div class="inner_bt"><a href="#" class="open_filters"><i class="ti-close"></i></a></div>
-                        @foreach($categories as $category)
-                        <div class="filter_type version_2">
-                            <h4><a href="#filter-{{ $category->id }}" data-bs-toggle="collapse" class="opened">{{ $category->category_name }}</a></h4>
-                            <div class="collapse hide" id="filter-{{ $category->id }}">
-                                <a href="{{ route('customer.categories', $category->slug) }}" data-bs-toggle="collapse" class="opened">{{ $category->category_name }}</a>
-                                        <ul>
-                                            @foreach($categories as $bot_category)
-                                                @if($category->id == $bot_category->top_id)
+{{--                        @foreach($categories as $category)--}}
+{{--                        <div class="filter_type version_2">--}}
+{{--                            <h4><a href="#filter-{{ $category->id }}" data-bs-toggle="collapse" class="opened">{{ $category->category_name }}</a></h4>--}}
+{{--                            <div class="collapse hide" id="filter-{{ $category->id }}">--}}
+{{--                                <a href="{{ route('customer.categories', $category->slug) }}" data-bs-toggle="collapse" class="opened">{{ $category->category_name }}</a>--}}
+{{--                                        <ul>--}}
+{{--                                            @foreach($categories as $bot_category)--}}
+{{--                                                @if($category->id == $bot_category->top_id)--}}
+{{--                                                <li>--}}
+{{--                                            <a href="{{ route('customer.categories', $bot_category->slug) }}"><label class="container_check">{{ $bot_category->category_name }}--}}
+{{--                                                </label></a></li>--}}
+{{--                                                @endif--}}
+{{--                                            @endforeach--}}
+{{--                                        </ul>--}}
+{{--                            </div>--}}
+
+{{--                            <!-- /filter_type -->--}}
+{{--                        </div>--}}
+{{--                        @endforeach--}}
+
+                            <div class="filter_type version_2">
+                                <h4><a href="#filter-1" data-bs-toggle="collapse" class="opened"> Ana Kategoriler</a></h4>
+                                <div class="collapse show" id="filter-1">
+                                    <ul>
+                                        @foreach($categories as $category)
                                                 <li>
-                                            <a href="{{ route('customer.categories', $bot_category->slug) }}"><label class="container_check">{{ $bot_category->category_name }}
-                                                </label></a></li>
-                                                @endif
-                                            @endforeach
-                                        </ul>
+                                                    <a href="{{ route('customer.categories', $category->slug) }}"><label class="container_check">{{ $category->category_name }}
+                                                        </label></a></li>
+                                            @if($category->slug == $slug_categoryname)
+                                                @foreach($botcategories as $botcategory)
+                                                    <ul>
+                                                    <li>
+                                                        <a href="{{ route('customer.categories', $botcategory->slug) }}"><label class="container_check">- {{ $botcategory->category_name }}
+                                                            </label></a></li></ul>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+
+                                <!-- /filter_type -->
                             </div>
-
-                            <!-- /filter_type -->
-                        </div>
-                        @endforeach
-
                         <!-- /filter_type -->
                         <div class="filter_type version_2">
                             <h4><a href="#filter_2" data-bs-toggle="collapse" class="opened">Color</a></h4>

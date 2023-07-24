@@ -12,7 +12,7 @@ class CategoryController extends Controller
         $category = Category::where('slug' ,$slug_categoryname)->firstOrFail();
         $botcategories = Category::where('top_id', $category->id)->get();
         $topcategories= Category::find($category->top_id);
-        $categories = Category::all();
+        $categories = Category::where('top_id',null)->get();
 
         $order = request('sırala');
         if ($order == 'cok-satanlar') {
@@ -33,6 +33,6 @@ class CategoryController extends Controller
             $products = $category->products()->distinct()->get();
         }
 
-        return view('customer.category', compact( 'products','category','botcategories','topcategories','categories'));
+        return view('customer.category', compact( 'slug_categoryname','products','category','botcategories','topcategories','categories'));
     }
 }
