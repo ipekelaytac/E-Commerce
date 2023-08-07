@@ -15,29 +15,28 @@ class FavoriteProductController extends Controller
     {
         $favorite_products = FavoriteProduct::
 //        where('user_id' , auth()->id())
-        where([['user_id' ,'=', auth()->id()],
-        ['collection_id' ,'=', null],])
+        where([['user_id', '=', auth()->id()],
+            ['collection_id', '=', null],])
             ->orderByDesc('id')->get();
-        $favorite_collections = Collection::where('user_id' , auth()->id())
+        $favorite_collections = Collection::where('user_id', auth()->id())
             ->orderByDesc('id')->get();
 
-        return view('customer.favorite_products', compact('favorite_products','favorite_collections'));
+        return view('customer.favorite_products', compact('favorite_products', 'favorite_collections'));
     }
 
     public function add()
     {
         $product = Product::find(\request('id'));
         $empty = FavoriteProduct::where('user_id', auth()->id())
-            ->where('product_id',request('id'))
-            ->where('collection_id',NULL)
+            ->where('product_id', request('id'))
+            ->where('collection_id', NULL)
             ->count();
-        if($empty==0){
+        if ($empty == 0) {
             FavoriteProduct::create([
                 'user_id' => auth()->id(),
-                'product_id'=>request('id'),
+                'product_id' => request('id'),
             ]);
-        }
-        else{
+        } else {
             return redirect()
                 ->route('customer.products', $product->slug)
                 ->with('message', 'Bu ürün favorilerde var!')
@@ -48,6 +47,7 @@ class FavoriteProductController extends Controller
             ->with('message', 'Favorilere eklendi.')
             ->with('message_type', 'success');
     }
+
     public function delete($id)
     {
         $favorite_products = FavoriteProduct::find($id);
@@ -61,7 +61,7 @@ class FavoriteProductController extends Controller
 
     public function collection()
     {
-        $favorite_collections = Collection::where('user_id' , auth()->id())
+        $favorite_collections = Collection::where('user_id', auth()->id())
             ->orderByDesc('id')->get();
 
 
@@ -73,13 +73,13 @@ class FavoriteProductController extends Controller
         $favorite_collection = Collection::whereSlug($slug_collectionname)->firstOrFail();
 
         $favorite_products = FavoriteProduct::where([
-            ['user_id' ,'=', auth()->id()],
-            ['collection_id' ,'=', $favorite_collection->id],])
+            ['user_id', '=', auth()->id()],
+            ['collection_id', '=', $favorite_collection->id],])
             ->orderByDesc('id')->get();
-        $favorite_collections = Collection::where('user_id' , auth()->id())
+        $favorite_collections = Collection::where('user_id', auth()->id())
             ->orderByDesc('id')->get();
 
-        return view('customer.collection_products', compact('favorite_products','favorite_collection','favorite_collections'));
+        return view('customer.collection_products', compact('favorite_products', 'favorite_collection', 'favorite_collections'));
     }
 
     public function collection_add()
@@ -87,8 +87,8 @@ class FavoriteProductController extends Controller
         $slug = Str::slug(request('collection_name'), '-');
         Collection::create([
             'user_id' => auth()->id(),
-            'collection_name'=>request('collection_name'),
-            'slug'=>$slug,
+            'collection_name' => request('collection_name'),
+            'slug' => $slug,
         ]);
 
         return redirect()
@@ -96,6 +96,7 @@ class FavoriteProductController extends Controller
             ->with('message', 'Koleksiyon eklendi.')
             ->with('message_type', 'success');
     }
+
     public function collection_delete($id)
     {
         $collection = Collection::find($id);
@@ -106,21 +107,21 @@ class FavoriteProductController extends Controller
             ->with('message', 'Koleksiyon silindi')
             ->with('message_type', 'success');
     }
+
     public function collection_product_add()
     {
         $product = Product::find(\request('product_id'));
         $empty = FavoriteProduct::where('user_id', auth()->id())
-            ->where('product_id',request('product_id'))
-            ->where('collection_id',request('collection_id'))
+            ->where('product_id', request('product_id'))
+            ->where('collection_id', request('collection_id'))
             ->count();
-        if($empty==0){
+        if ($empty == 0) {
             FavoriteProduct::create([
                 'user_id' => auth()->id(),
-                'product_id'=>request('product_id'),
-                'collection_id'=>request('collection_id'),
+                'product_id' => request('product_id'),
+                'collection_id' => request('collection_id'),
             ]);
-        }
-        else{
+        } else {
             return redirect()
                 ->route('customer.products', $product->slug)
                 ->with('message', 'Bu koleksiyonda ürün var!')

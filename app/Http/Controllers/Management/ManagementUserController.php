@@ -67,7 +67,7 @@ class ManagementUserController extends Controller
     {
         $this->validate(request(), [
             'name_surname' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:user',
         ]);
 
         $data = request()->only('name_surname', 'email');
@@ -77,21 +77,18 @@ class ManagementUserController extends Controller
         $data['isit_active'] = request()->has('isit_active') && request('isit_active') == 1 ? 1 : 0;
         $data['isit_executive'] = request()->has('isit_executive') && request('isit_executive') == 1 ? 1 : 0;
 
+
+        $detail = request()->only('address', 'phone','mobile_phone');
         if ($id > 0) {
             $entry = User::where('id', $id)->firstOrFail();
             $entry->update($data);
+            $entry->detail()->update($detail);
+
         } else {
             $entry = User::create($data);
+            $entry->detail()->create($detail);
         }
 
-        UserDetail::updateOrCreate(
-            ['user_id' => $entry->id],
-            [
-                'address' => request('address'),
-                'phone' => request('phone'),
-                'mobile_phone' => request('mobile_phone')
-            ]
-        );
 
         return redirect()
             ->route('management.user.save', $entry->id)
