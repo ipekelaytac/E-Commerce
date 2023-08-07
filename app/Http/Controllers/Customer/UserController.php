@@ -80,6 +80,8 @@ class UserController extends Controller
                         'password' => 'required|confirmed|min:6|max:20',
 
     ]);
+
+
         $user = User::create([
            'name_surname'=>request('name_surname'),
             'email'=>request('email'),

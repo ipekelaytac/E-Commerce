@@ -75,7 +75,7 @@
             <tr>
                 <td style="width:120px">
                     <a href="{{ route('management.product', $cart_product->slug) }}">
-                        <img src="{{ $cart_product->product_image!=null ? asset('uploads/products/' . $cart_product->product_image) : 'http://via.placeholder.com/120x100?text=UrunResmi' }}" style="height: 120px;">
+                        <img src="{{ $cart_product->product->detail->product_image!=null ? asset('uploads/products/' . $cart_product->product->detail->product_image) : 'http://via.placeholder.com/120x100?text=UrunResmi' }}" style="height: 120px;">
                     </a>
                 </td>
                 <td>

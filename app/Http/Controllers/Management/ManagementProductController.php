@@ -63,6 +63,7 @@ class ManagementProductController extends Controller
             $entry->detail()->update($detail);
             $entry->categories()->sync($categories);
             $entry->brand()->sync($brand);
+//            CartProduct::with('order')->where('main_cart_id','order.main_cart_id')->where('product_id', $id)->count();
             CartProduct::where('product_id', $id)->update(['price' => $data['price']]);
         } else {
             $entry = Product::create($data);
