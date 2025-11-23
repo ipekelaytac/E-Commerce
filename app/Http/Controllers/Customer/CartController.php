@@ -6,18 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\CartProduct;
 use App\Models\MainCart;
 use App\Models\Product;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $stock = Cart::content();
-        foreach ($stock as $stock_errors){
-            if($stock_errors->options->stock < $stock_errors->qty){
-                $stock_error = Cart::content()->count();
+        $stockItems = Cart::getContent();
+        foreach ($stockItems as $item) {
+            $itemStock = $item->options->stock ?? null;
+
+            if ($itemStock !== null && $itemStock < $item->quantity) {
+                $stock_error = $stockItems->count();
             }
         }
+
         if(empty($stock_error)){
             $stock_error = 0;
         }
@@ -27,7 +30,7 @@ class CartController extends Controller
     public function add()
     {
         $product = Product::with('detail')->find(\request('id'));
-        $cartItem=Cart::add($product->id, $product->product_name, 1 , $product->price, 0,['slug' =>$product->slug,'product_image' =>$product->detail->product_image,'stock'=>$product->stock],);
+        $cartItem=Cart::add($product->id, $product->product_name, $product->price,1,  0,['slug' =>$product->slug,'product_image' =>$product->detail->product_image,'stock'=>$product->stock],);
 
 
         if(auth()->check())
@@ -79,28 +82,47 @@ class CartController extends Controller
     }
     public function update($rowid)
     {
-//        $validator = Validator::make(\request()->all(),[
-//           'number' =>'required|numeric|between:0,5'
-//        ]);
-//       if ($validator->fails()){
-//           session()->flash('message_type','danger');
-//           session()->flash('message','adet değeri en az 1 en fazla 5 olabilir .');
-//            return response()->json(['success'=>false]);
-//       }
-
+        $number = request('number');
         if(auth()->check())
         {
             $active_cart_id = session('active_cart_id');
             $cartItem = Cart::get($rowid);
-            if(\request('number') == 0)
-                CartProduct::where('main_cart_id', $active_cart_id)->where('product_id' , $cartItem->id)->delete();
-            else
-            CartProduct::where('main_cart_id' , $active_cart_id)->where('product_id' , $cartItem->id)->update(['number'=>\request('number')]);
+
+            if($number == 0) {
+                CartProduct::where('main_cart_id', $active_cart_id)
+                    ->where('product_id', $cartItem->id)
+                    ->delete();
+            } else {
+                CartProduct::where('main_cart_id', $active_cart_id)
+                    ->where('product_id', $cartItem->id)
+                    ->update(['number' => $number]);
+            }
         }
 
-        Cart::update($rowid,\request('number'));
-        session()->flash('message_type','success');
-        session()->flash('message','Sepet güncellendi.');
-        return response()->json(['success'=>true]);
+        // Sepetteki ürünü güncelle
+        Cart::update($rowid, [
+            'quantity' => [
+                'relative' => false,
+                'value' => $number
+            ]
+        ]);
+
+        // Güncel subtotal ve toplam fiyatı al
+        $cartItemUpdated = Cart::get($rowid);
+        $subtotal = $cartItemUpdated ? $cartItemUpdated->price * $cartItemUpdated->quantity : 0;
+        $total = Cart::getContent()->sum(function ($item) {
+            return $item->price * $item->quantity;
+        });
+        return response()->json([
+            'success' => true,
+            'subtotal' => $subtotal,
+            'total' => $total,
+            'number' => $number,
+            'rowid' => $rowid
+        ]);
     }
+
+
+
+
 }

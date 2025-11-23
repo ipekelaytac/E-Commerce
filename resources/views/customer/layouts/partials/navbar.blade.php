@@ -52,29 +52,44 @@
                     <ul class="top_tools">
                         <li>
                             <div class="dropdown dropdown-cart">
-                                <a href="{{route('customer.cart')}}" class="cart_bt"><strong>{{ count(Cart::content()) }}</strong></a>
+                                <a href="{{route('customer.cart')}}" class="cart_bt"><strong>{{ count(Cart::getContent()) }}</strong></a>
                                 <div class="dropdown-menu">
-                                    @if( count(Cart::content()) > 0)
+                                    @if( count(Cart::getContent()) > 0)
                                     <ul>
-                                        @foreach(Cart::content() as $productCartItem)
+                                        @foreach(Cart::getContent() as $productCartItem)
+                                            @php
+                                                $productImage = $productCartItem->options->product_image ?? null;
+                                                $rowId = $productCartItem->id ?? $productCartItem->rowId ?? uniqid();
+                                            @endphp
                                             <li>
-                                                <a href="{{ route('customer.products',Str::slug($productCartItem->name)) }}">
-                                                    <figure><img
-                                                            src="{{ $productCartItem->options->product_image!=null ? asset('uploads/products/' . $productCartItem->options->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}"
-                                                            data-src="{{ $productCartItem->options->product_image!=null ? asset('uploads/products/' . $productCartItem->options->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}" alt=""
-                                                            width="50" height="50" class="lazy"></figure>
-                                                    <strong><span>{{ $productCartItem->name }}</span>{{$productCartItem->price}} ₺</strong>
+                                                <a href="{{ route('customer.products', Str::slug($productCartItem->name ?? '')) }}">
+                                                    <figure>
+                                                        <img
+                                                            src="{{ $productImage ? asset('uploads/products/' . $productImage) : 'https://via.placeholder.com/200?text=UrunResmi' }}"
+                                                            data-src="{{ $productImage ? asset('uploads/products/' . $productImage) : 'https://via.placeholder.com/200?text=UrunResmi' }}"
+                                                            alt=""
+                                                            width="50" height="50" class="lazy">
+                                                    </figure>
+                                                    <strong>
+                                                        <span>{{ $productCartItem->name ?? 'Ürün yok' }}</span>
+                                                        {{ $productCartItem->price ?? 0 }} ₺
+                                                    </strong>
                                                 </a>
-                                                <form id="del" action="{{ route('customer.cart.delete',$productCartItem->rowId) }}" method="post">
-                                                    {{ csrf_field() }}
-                                                    {{ method_field('DELETE') }}
-                                                    <a class="action"onclick="document.getElementById('del').submit();"><i class="ti-trash"></i></a>
+
+                                                <form id="del-{{ $rowId }}" action="{{ route('customer.cart.delete', $rowId) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a class="action" onclick="document.getElementById('del-{{ $rowId }}').submit();">
+                                                        <i class="ti-trash"></i>
+                                                    </a>
                                                 </form>
                                             </li>
                                         @endforeach
                                     </ul>
                                     <div class="total_drop">
-                                        <div class="clearfix"><strong>Toplam Fiyat</strong><span>{{Cart::subtotal()}} ₺</span></div>
+                                        <div class="clearfix"><strong>Toplam Fiyat</strong><span> {{ \Cart::getContent()->sum(function ($item) {
+    return $item->price * $item->quantity;
+}) }} ₺</span></div>
                                         <a href="{{route('customer.cart')}}" class="btn_1 outline">Sepete Git</a><a
                                             href="{{route('customer.payment')}}" class="btn_1">Ödemeye Geç</a>
                                     </div>

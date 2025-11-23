@@ -82,14 +82,6 @@
                                     @endif
                                 </p>
                             </div>
-                            <div class="row">
-                                <label class="col-xl-5 col-lg-5  col-md-6 col-6"><strong>Adet</strong></label>
-                                <div class="col-xl-4 col-lg-5 col-md-6 col-6">
-                                    <div class="numbers-row">
-                                        <input type="text" value="1" id="quantity_1" class="qty2" name="quantity_1">
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="row">
@@ -98,7 +90,6 @@
                                     <span class="old_price">{{$product->price}}₺</span></div>
                             </div>
                             <div class="col-lg-4 col-md-6">
-
                                     <form action="{{route('customer.cart.add')}}" method="post">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="id" value="{{ $product->id }}">

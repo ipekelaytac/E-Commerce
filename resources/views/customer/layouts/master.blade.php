@@ -19,9 +19,7 @@
 
 <div id="toTop"></div>
 
-
 @include('customer.layouts.partials.js')
 @yield('js')
 </body>
-
 </html>

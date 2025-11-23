@@ -15,7 +15,7 @@ class PaymentController extends Controller
             return redirect()->route('customer.login')
                 ->with('message_type', 'info')
                 ->with('message', 'Ödeme işlemi için oturum açmanız veya kullanıcı kaydı yapmanız gerekmektedir.');
-        } else if (count(Cart::content()) == 0) {
+        } else if (count(Cart::getContent()) == 0) {
             return redirect()->route('customer.index')
                 ->with('message_type', 'info')
                 ->with('message', 'Ödeme işlemi için sepetinizde bir ürün bulunmalıdır.');

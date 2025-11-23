@@ -46,7 +46,7 @@ class UserController extends Controller
             session()->put('active_cart_id',$active_cart_id);
             if (Cart::count()>0)
             {
-                foreach (Cart::content() as $cartItem)
+                foreach (Cart::getContent() as $cartItem)
                 {
                     CartProduct::updateOrCreate(
                         ['main_ca4rt_id'=>$active_cart_id,'product_id'=>$cartItem->id],

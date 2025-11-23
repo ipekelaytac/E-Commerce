@@ -16,6 +16,8 @@ trait RefreshDatabase
      */
     public function refreshDatabase()
     {
+        $this->beforeRefreshingDatabase();
+
         $this->usingInMemoryDatabase()
                         ? $this->refreshInMemoryDatabase()
                         : $this->refreshTestDatabase();
@@ -56,6 +58,7 @@ trait RefreshDatabase
     {
         return [
             '--seed' => $this->shouldSeed(),
+            '--seeder' => $this->seeder(),
         ];
     }
 
@@ -86,8 +89,11 @@ trait RefreshDatabase
     {
         $database = $this->app->make('db');
 
+        $this->app->instance('db.transactions', $transactionsManager = new DatabaseTransactionsManager);
+
         foreach ($this->connectionsToTransact() as $name) {
             $connection = $database->connection($name);
+            $connection->setTransactionManager($transactionsManager);
             $dispatcher = $connection->getEventDispatcher();
 
             $connection->unsetEventDispatcher();
@@ -117,6 +123,16 @@ trait RefreshDatabase
     {
         return property_exists($this, 'connectionsToTransact')
                             ? $this->connectionsToTransact : [null];
+    }
+
+    /**
+     * Perform any work that should take place before the database has started refreshing.
+     *
+     * @return void
+     */
+    protected function beforeRefreshingDatabase()
+    {
+        // ...
     }
 
     /**

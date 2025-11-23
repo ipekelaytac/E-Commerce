@@ -1,11 +1,11 @@
 @extends('customer.layouts.master')
 @section('title', 'Sepet')
+
 @section('head')
     <link href="{{ asset('customer/css/cart.css') }}" rel="stylesheet">
 @endsection
-@section('content')
-    @include('customer.layouts.partials.alert')
 
+@section('content')
     <main class="bg_gray">
         <div class="container margin_30">
             <div class="page_header">
@@ -18,94 +18,60 @@
                 <h1>Sepet Sayfası</h1>
             </div>
             <!-- /page_header -->
+
             <table class="table table-striped cart-list">
                 <thead>
                 <tr>
-                    <th>
-                        Ürün
-                    </th>
-                    <th>
-                        Fiyat
-                    </th>
-                    <th>
-                        Adet
-                    </th>
-                    <th>
-                        Toplam Fiyat
-                    </th>
-                    <th>
-
-                    </th>
+                    <th>Ürün</th>
+                    <th>Fiyat</th>
+                    <th>Adet</th>
+                    <th>Toplam Fiyat</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach(Cart::content() as $productCartItem)
-
+                @foreach(Cart::getContent() as $product)
+                    @php
+                        $image = $product->attributes['conditions']['product_image'] ?? null;
+                    @endphp
                     <tr>
                         <td>
                             <div class="thumb_cart">
-                                <img
-                                    src="{{ $productCartItem->options->product_image!=null ? asset('uploads/products/' . $productCartItem->options->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}"
-                                    data-src="{{ $productCartItem->options->product_image!=null ? asset('uploads/products/' . $productCartItem->options->product_image) : 'https://via.placeholder.com/200?text=UrunResmi' }}"
-                                    class="lazy" alt="Image">
+                                <img src="{{ $image ? asset('uploads/products/' . $image) : 'https://via.placeholder.com/200?text=UrunResmi' }}"
+                                     alt="{{ $product->name }}">
                             </div>
-                            <span class="item_cart">{{ $productCartItem->product_name }}</span>
+                            <span class="item_cart">{{ $product->name }}</span>
                         </td>
+                        <td><strong>{{ number_format($product->price, 2) }} ₺</strong></td>
                         <td>
-                            <strong>{{$productCartItem->price}} ₺</strong>
-                        </td>
-                        <td>
-{{--                            <a href="#" class="btn btn-xs btn-default product-reduce-the-amount"--}}
-{{--                               data-id="{{ $productCartItem->rowId}}"--}}
-{{--                               data-number="{{ $productCartItem->qty-1 }}">-</a>--}}
-{{--                            <span style="padding: 10px 20px">{{$productCartItem->qty}}</span>--}}
-{{--                            <a href="#" class="btn btn-xs btn-default product-increase-the-amount"--}}
-{{--                               data-id="{{ $productCartItem->rowId}}"--}}
-{{--                               data-number="{{ $productCartItem->qty+1 }}">+</a>--}}
+                            <div class="numbers-row">
+                                <input type="text" value="{{ $product->quantity }}" id="quantity_{{ $product->id }}" class="qty2" readonly>
 
-                                                    <div class="numbers-row">
-                                                        <input type="text" value="{{$productCartItem->qty}}" id="quantity_1" class="qty2" name="quantity_1">
-                                                        <a href="#"  data-id="{{ $productCartItem->rowId}}"
-                                                           data-number="{{ $productCartItem->qty+1 }}" class="inc button_inc">+</a>
-                                                        <a href="#"  data-id="{{ $productCartItem->rowId}}"
-                                                           data-number="{{ $productCartItem->qty-1 }}" class="dec button_inc">-</a>
-                                                    </div>
+                                <a href="#" class="button_inc inc" data-id="{{ $product->id }}">+</a>
+                                <a href="#" class="button_inc dec" data-id="{{ $product->id }}">-</a>
+                            </div>
                         </td>
                         <td>
-                            <strong>{{$productCartItem->subtotal}} ₺</strong>
+                            <strong id="subtotal_{{ $product->id }}">
+                                {{ number_format($product->price * $product->quantity, 2) }} ₺
+                            </strong>
                         </td>
                         <td class="options">
-
-                        <form id="del" action="{{ route('customer.cart.delete',$productCartItem->rowId) }}" method="post">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <a class="action"onclick="document.getElementById('del').submit();"><i class="ti-trash"></i></a>
-                        </form>
+                            <form id="del-{{ $product->id }}" action="{{ route('customer.cart.delete', $product->id) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <a class="action" onclick="document.getElementById('del-{{ $product->id }}').submit();">
+                                    <i class="ti-trash"></i>
+                                </a>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-
-{{--            <div class="row add_top_30 flex-sm-row-reverse cart_actions">--}}
-{{--                <div class="col-sm-4 text-end">--}}
-{{--                    <button type="button" class="btn_1 gray">Update Cart</button>--}}
-{{--                </div>--}}
-{{--                --}}{{--                <div class="col-sm-8">--}}
-{{--                --}}{{--                    <div class="apply-coupon">--}}
-{{--                --}}{{--                        <div class="form-group">--}}
-{{--                --}}{{--                            <div class="row g-2">--}}
-{{--                --}}{{--                                <div class="col-md-6"><input type="text" name="coupon-code" value="" placeholder="Promo code" class="form-control"></div>--}}
-{{--                --}}{{--                                <div class="col-md-4"><button type="button" class="btn_1 outline">Apply Coupon</button></div>--}}
-{{--                --}}{{--                            </div>--}}
-{{--                --}}{{--                        </div>--}}
-{{--                --}}{{--                    </div>--}}
-{{--                --}}{{--                </div>--}}
-{{--            </div>--}}
-{{--            <!-- /cart_actions -->--}}
-
         </div>
         <!-- /container -->
+
 
         <div class="box_cart">
             <div class="container">
@@ -113,40 +79,70 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <ul>
                             <li>
-                                <span>Toplam Fiyat</span> {{Cart::subtotal()}} ₺
+                                Toplam Fiyat
+
                             </li>
-                            {{--                            <li>--}}
-                            {{--                                <span>Kargo</span> $7.00--}}
-                            {{--                            </li>--}}
-                            {{--                            <li>--}}
-                            {{--                                <span>Total</span> $247.00--}}
-                            {{--                            </li>--}}
+
+
+
+
+
+
                         </ul>
-                        <a href="{{route('customer.payment')}}" class="btn_1 full-width cart">Sipariş Ver</a>
+                        <a href="{{ route('customer.payment') }}" class="btn_1 full-width cart">Sipariş Ver</a>
+
                     </div>
                 </div>
             </div>
         </div>
         <!-- /box_cart -->
-
     </main>
-
 @endsection
+
 @section('js')
-    <script>
-        $(function () {
-            $('.product-increase-the-amount,.product-reduce-the-amount').on('click', function () {
-                var id = $(this).attr('data-id');
-                var number = $(this).attr('data-number');
+    <script>$(document).ready(function() {
+            // sayfa yüklendiğinde toplam fiyat için text node ekleyelim
+                // Toplam fiyat text node olarak ekle
+                $('li:contains("Toplam Fiyat")').each(function() {
+                    if (!$(this).data('price-appended')) {
+                        let total = "{{ number_format(Cart::getContent()->sum(fn($item) => $item->price * $item->quantity), 2) }}";
+                        $(this).text('Toplam Fiyat : ' + total + ' ₺');
+                        $(this).data('price-appended', true);
+                    }
+                });
+
+
+
+            // quantity değiştiğinde Ajax ile güncelle
+            $(document).on('click', 'a.button_inc', function(e){
+                e.preventDefault();
+                const $btn = $(this);
+                const $input = $btn.siblings('input.qty2');
+                let current = parseInt($input.val());
+
+                if ($btn.hasClass('inc')) current += 1;
+                else if ($btn.hasClass('dec') && current > 1) current -= 1;
+
+                const productId = $btn.data('id');
+
                 $.ajax({
                     type: 'PATCH',
-                    url: '{{ url('sepet/guncelle') }}/' + id,
-                    data: {number: number},
-                    success: function (result) {
-                        window.location.href = '{{route('customer.cart')}}';
+                    url: '/sepet/guncelle/' + productId,
+                    data: { number: current, _token: '{{ csrf_token() }}' },
+                    success: function(res){
+                        $input.val(current);
+                        $('#subtotal_' + productId).text(res.subtotal.toFixed(2) + ' ₺');
+
+                        // span olmadan text node güncelle
+                        $('li:contains("Toplam Fiyat")').each(function() {
+                            const text = $(this).text();
+                            const parts = text.split(':'); // önceki değeri sil
+                            $(this).contents().filter(function(){ return this.nodeType === 3; }).first().replaceWith('Toplam Fiyat : ' + res.total.toFixed(2) + ' ₺');
+                        });
                     }
                 });
             });
         });
+
     </script>
 @endsection

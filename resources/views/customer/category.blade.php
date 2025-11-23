@@ -33,25 +33,31 @@
 {{--                        </div>--}}
 {{--                        @endforeach--}}
 
-                            <div class="filter_type version_2">
-                                <h4><a href="#filter-1" data-bs-toggle="collapse" class="opened"> Ana Kategoriler</a></h4>
-                                <div class="collapse show" id="filter-1">
-                                    <ul>
-                                        @foreach($categories as $category)
-                                                <li>
-                                                    <a href="{{ route('customer.categories', $category->slug) }}"><label class="container_check">{{ $category->category_name }}
-                                                        </label></a></li>
-                                            @if($category->slug == $slug_categoryname)
-                                                @foreach($botcategories as $botcategory)
-                                                    <ul>
-                                                    <li>
-                                                        <a href="{{ route('customer.categories', $botcategory->slug) }}"><label class="container_check">- {{ $botcategory->category_name }}
-                                                            </label></a></li></ul>
-                                                @endforeach
+                        <div class="filter_type version_2">
+                            <h4>
+                                <a href="#filter-1" data-bs-toggle="collapse" class="opened">Kategoriler</a>
+                            </h4>
+                            <div class="collapse show" id="filter-1">
+                                <ul class="main-categories">
+                                    @foreach($categories as $category)
+                                        <li class="category-item">
+                                            <a href="{{ route('customer.categories', $category->slug) }}">{{ $category->category_name }}</a>
+
+                                            @if($category->slug == $slug_categoryname && $botcategories->count())
+                                                <ul class="sub-categories">
+                                                    @foreach($botcategories as $botcategory)
+                                                        <li class="subcategory-item">
+                                                            <a  href="{{ route('customer.categories', $botcategory->slug) }}">- {{ $botcategory->category_name }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
                                             @endif
-                                        @endforeach
-                                    </ul>
-                                </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+
 
                                 <!-- /filter_type -->
                             </div>

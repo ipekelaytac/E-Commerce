@@ -48,8 +48,8 @@
                         <figure>
                             <a href="{{ route('customer.products', $product->product->slug) }}">
                                 <img class="img-fluid lazy" style="height: 200px"
-                                     src="{{ $product->product_image!=null ? asset('uploads/products/' . $product->product_image) : 'customer/img/products/product_placeholder_square_medium.jpg' }}"
-                                     data-src="{{ $product->product_image!=null ? asset('uploads/products/' . $product->product_image) : 'customer/img/products/product_placeholder_square_medium.jpg' }}" alt="">
+                                     src="{{ $product->product_image!=null ? asset('/uploads/products/' . $product->product_image) : '/customer/img/products/product_placeholder_square_medium.jpg' }}"
+                                     data-src="{{ $product->product_image!=null ? asset('/uploads/products/' . $product->product_image) : '/customer/img/products/product_placeholder_square_medium.jpg' }}" alt="">
                             </a>
                         </figure>
 {{--                        <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i--}}
