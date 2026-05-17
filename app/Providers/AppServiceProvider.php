@@ -30,13 +30,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
+   // public function boot()
+  //  {
 
-        Schema::defaultStringLength(191);
+  //      Schema::defaultStringLength(191);
 
-        $categories = Category::whereRaw('top_id is null')->take(8)->get();
-        View::share('categories', $categories);
+ //       $categories = Category::whereRaw('top_id is null')->take(8)->get();
+//        View::share('categories', $categories);
 
 //
 //            $timeout = now()->addMinutes(10);
@@ -57,5 +57,13 @@ class AppServiceProvider extends ServiceProvider
 //        foreach(Settings::all() as $settings) {
 //            Config::set('key.' . $settings->key, $settings->value);
 //        }
-    }
+  //  }
+    public function boot()
+  {
+      // Önce: tablo var mı diye kontrol et
+      if (\Illuminate\Support\Facades\Schema::hasTable('categories')) {
+          $categories = \App\Models\category::where('top_id', null)->limit(8)->get();
+          view()->share('categories', $categories);
+      }
+  }
 }
